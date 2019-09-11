@@ -3,8 +3,8 @@
 
 # Zeus
 
-Never again open a tab, copy/Paste your error/Exception to find available solution in your code !
-Zeus will handle everything for you, directly in the CLI after catching an error !
+Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
+Zeus will handle everything for you, directly in the CLI after catching an error!\
 **AMAZING RIGHT ?**
 
 ## How it's works
