@@ -15,8 +15,16 @@ Theese are steps :
 - You just need to enter number corresponding the forum you want to fetch answers
 - That's all, Zeus will provide you the available questions matching your error, give you the answers, votes,...
 
-YOU GET IT ?
-No need to `copy the Exception`, `Minimize your terminal`, `Open the browser`, `Paste it on google or any searchEngine`, `Open multiple tabs per result`, `fetching where the solution of your problem could be`...
+YOU GET IT ?\
+
+No need to:
+
+- `copy the Exception`, 
+- `Minimize your terminal`, 
+- `Open the browser`, 
+- `Paste it on google or any searchEngine`, 
+- `Open multiple tabs per result`, 
+- `fetching where the solution of your problem could be`...
 
 ## Available versions of Zeus
 
