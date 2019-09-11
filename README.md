@@ -1,3 +1,6 @@
+
+<img scr="logo.png" />
+
 # Zeus
 
 Never again go and open a tab, copy/Paste again your error to find available solution in your code ! Zeus will handle everything for you, directly after catching an error !
@@ -9,7 +12,7 @@ Theese are steps :
 
 - Zeus get your error and ask you, where you want to find solution
 - You just need to enter number corresponding the forum you want to fetch answers
-- That's all, Zeus will provide you the availablee questions matching your error, give you the answers, votes,...
+- That's all, Zeus will provide you the available questions matching your error, give you the answers, votes,...
 
 YOU GET IT ?
 No need to `copy the Exception`, `Minimize your terminal`, `Open the browser`, `Paste it on google or any searchEngine`, `Open multiple tabs per result`, `fetching where the solution of your problem could be`...
