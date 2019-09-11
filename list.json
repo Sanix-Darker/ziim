@@ -1,0 +1,17 @@
+[
+    {
+        "title":"StackOverflow",
+        "link":"https://stackoverflow.com",
+        "search_link":"https://stackoverflow.com/search?q=[z]",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[@class='result-link']//h3//a/@title",
+            "link": "//div[@class='result-link']//h3//a/@href",
+            "answers": "//div[@class='stats']//div[contains(@class, 'status')]//strong/text()",
+            "votes": "//div[@class='stats']//div[contains(@class, 'vote')]//div[contains(@class, 'votes')]//span[contains(@class, 'vote-count-post')]//strong/text()"
+        },
+        "responses":"//div[@id='answers']//div[contains(@class, 'answer')]//div[contains(@class, 'post-text')]",
+        "responses_vote":"//div[@id='answers']//div[contains(@class, 'votecell')]//div[contains(@class, 'vote-count')]/@data-value",
+        "solve_response":"//div[@id='answers']//div[contains(@class, 'accepted-answer')]//div[contains(@class, 'post-text')]"
+    }
+]
