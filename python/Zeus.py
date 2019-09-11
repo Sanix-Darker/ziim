@@ -23,15 +23,24 @@ class bcolors:
 
 class Zeus:
 
-    def __init__(self, lang = "Python", specific_link=[], search_level = 0):
+    def __init__(self, lang = "Python", search_level = 0):
         """
         Keyword Arguments:
-            specific_link {list} -- [list of specific link, where to find] (default: {[]})
             search_level {int} -- [The level of searching results going from 0 to 5] (default: {0})
         """
         self.lang = lang
-        self.specific_link = specific_link
         self.search_level = search_level
+
+    def presentation(self):
+        """
+        A simple function for the header of Zeus
+        """
+        print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __|"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]  / /|  __/ |_| \__ \\ This tool find your exception online for you."+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] /____\___|\__,_|___/ Made by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
 
     def printResult(self, solutions):
         """
@@ -60,7 +69,7 @@ class Zeus:
                 print(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
                 count_selected = 1
                 for select in selected["result_list"]:
-                    print(bcolors.BOLD + "[+] "+str(count_selected)+"-) "+select["title"]+" ("+str(select["answers"])+" answers, "+str(select["votes"])+" votes)" + bcolors.ENDC)
+                    print(bcolors.BOLD + "[+] "+str(count_selected)+"-) "+str(select["title"])+" ("+str(select["answers"])+" answers, "+str(select["votes"])+" votes)" + bcolors.ENDC)
                     count_selected += 1
                 print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
                 print("[+] ------------------------")
@@ -131,6 +140,68 @@ class Zeus:
         except Exception as es:
             print(es)
 
+
+    def buildResultList(self, elt, link, tree, JSONObj, i):
+        """[This method have the role on building the result_list]
+
+        Arguments:
+            elt {[type]} -- [element from the array of titles]
+            link {[str]} -- [The link]
+            content {[str]} -- [The content of the question]
+            tree {[xpath]} -- [description]
+            tree2 {[xpath]} -- [description]
+            JSONObj {[json]} -- [description]
+        """
+        content = ""
+        try: content = ''.join(tree.xpath(JSONObj['each']['content']))
+        except Exception as es: pass
+
+        if("://" not in link):
+            link = JSONObj['link'] + link
+        source = requests.get(link)
+        # The tree2 for sub-requests
+        tree2 = html.fromstring(source.content)
+
+        to_append =  {
+            "title": elt,
+            "link": link,
+            "content":content
+        }
+        # Getting the solution
+        to_append["solve_response"] = ""
+        try: to_append["solve_response"] = ''.join(tree2.xpath(JSONObj['solve_response'])[0].xpath('.//text()'))
+        except Exception as es: pass
+
+        # Getting the number of answers
+        to_append["answers"] = 0
+        try: to_append["answers"] = int(tree.xpath(JSONObj['each']['answers'])[i])
+        except Exception as es: pass
+
+        # Getting the number of votes
+        to_append["votes"] = 0
+        try: to_append["votes"] = int(tree.xpath(JSONObj['each']['votes'])[i])
+        except Exception as es: pass
+
+        # Getting the list of all response
+        responses_content = []
+        responses_count = 0
+        for rep in tree2.xpath(JSONObj['responses']):
+            # On recuperes uniquement des elements qui ne sont pas de la reponse
+            if ''.join(rep.xpath('.//text()')) != to_append["solve_response"] :
+                votes_per_response = 0
+                try: votes_per_response = int(tree2.xpath(JSONObj['responses_vote'])[responses_count])
+                except Exception as es: pass
+                responses_content.append( { "votes": votes_per_response, "content":''.join(rep.xpath('.//text()'))})
+            responses_count += 1
+            if responses_count == MAX_RESPONSES_PER_LINK:
+                break
+        # Adding in the to_append
+        to_append["responses"] = responses_content
+        return to_append
+
+
+    # ? go method
+    # ! The Main method that take the eror and proceed
     def go(self, error):
         global MAX_RESULT
         global MAX_RESPONSES_PER_LINK
@@ -140,23 +211,35 @@ class Zeus:
         Keyword Arguments:
             error {str} -- [The error message] (default: {""})
         """
-        print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __|"+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+]  / /|  __/ |_| \__ \\"+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+] /____\___|\__,_|___/ by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
-        checking_message = "\r[+] Checking available solution(s) online, level("+str(self.search_level)+")."
-        print(checking_message, end="")
+        self.presentation()
 
         MAX_RESULT += self.search_level
         MAX_RESPONSES_PER_LINK += self.search_level
 
-        error = self.lang+" "+str(error)
+        error = self.lang+" "+str(error).split("\n")[-1]
         with open(LIST_JSON_PATH, "r") as file_:
             JSONArray = json.loads(file_.read())
             solutions = []
+            print("[+] Where do you want to find solutions: ")
+            solution_count = 1
             for JSONObj in JSONArray:
+                print(bcolors.BOLD + "[+] "+str(solution_count)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
+
+            thechoice = "1"
+            try:
+                thechoice = input(bcolors.WARNING + "[+] Choose ( Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow)): " + bcolors.ENDC)
+                if thechoice == "":
+                    thechoice = "1"
+            except Exception as es:
+                pass
+
+            selected_choice = thechoice.split(",")
+
+            checking_message = "\r[+] Checking available solution(s) online, search_level("+str(self.search_level)+")."
+            print(checking_message, end="")
+
+            for o in range(0, len(selected_choice)):
+                JSONObj = JSONArray[int(selected_choice[o])-1]
 
                 checking_message += "."
                 print(checking_message, end="")
@@ -176,53 +259,7 @@ class Zeus:
                         print(checking_message, end="")
                         link = tree.xpath(JSONObj['each']['link'])[i]
 
-                        content = ""
-                        try: content = ''.join(tree.xpath(JSONObj['each']['content']))
-                        except Exception as es: pass
-
-                        if("://" not in link) :
-                            link = JSONObj['link'] + link
-                        source = requests.get(link)
-                        # The tree2 for sub-requests
-                        tree2 = html.fromstring(source.content)
-
-                        to_append =  {
-                            "title": elt,
-                            "link": link,
-                            "content":content
-                        }
-
-                        # Getting the solution
-                        to_append["solve_response"] = ""
-                        try: to_append["solve_response"] = ''.join(tree2.xpath(JSONObj['solve_response'])[0].xpath('.//text()'))
-                        except Exception as es: pass
-
-                        # Getting the number of answers
-                        to_append["answers"] = 0
-                        try: to_append["answers"] = int(tree.xpath(JSONObj['each']['answers'])[i])
-                        except Exception as es: pass
-
-                        # Getting the number of votes
-                        to_append["votes"] = 0
-                        try: to_append["votes"] = int(tree.xpath(JSONObj['each']['votes'])[i])
-                        except Exception as es: pass
-
-                        # Getting the list of all response
-                        responses_content = []
-                        responses_count = 0
-                        for rep in tree2.xpath(JSONObj['responses']):
-                            # On recuperes uniquement des elements qui ne sont pas de la reponse
-                            if ''.join(rep.xpath('.//text()')) != to_append["solve_response"] :
-                                votes_per_response = 0
-                                try: votes_per_response = int(tree2.xpath(JSONObj['responses_vote'])[responses_count])
-                                except Exception as es: pass
-                                responses_content.append( { "votes": votes_per_response, "content":''.join(rep.xpath('.//text()'))})
-                            responses_count += 1
-                            if responses_count == MAX_RESPONSES_PER_LINK:
-                                break
-                        # Adding in the to_append
-                        to_append["responses"] = responses_content
-
+                        to_append = self.buildResultList(elt, link, tree, JSONObj, i)
                         result_list.append(to_append)
                         i += 1
                         if i == MAX_RESULT:

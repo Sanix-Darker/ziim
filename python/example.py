@@ -1,10 +1,11 @@
 import Zeus as Zeus
-
-z = Zeus.Zeus()
+zeus = Zeus.Zeus(search_level = 3)
 
 try:
-    print("Example")
-    test = 1200/0
+    # Your code here
+    test = "test"+12 # This will throws an error
 except Exception as es:
     print(es)
-    z.go(es)
+    # Then call zeus here
+    zeus.go(es)
+    # That's all !
