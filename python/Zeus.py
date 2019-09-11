@@ -35,12 +35,15 @@ class Zeus:
             for sol in solutions:
                 print("[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")")
                 count_sol += 1
-            print("[+] 0-) To stop/Back")
+            print("[+] 0-) To stop")
             print("[+] -----------------")
 
             choice = int(input("[+] Choose available options: "))
 
         try:
+            if choice == 0:
+                exit()
+
             choice2 = 0
             while(choice2 == 0):
                 selected = solutions[choice-1]
@@ -68,22 +71,34 @@ class Zeus:
                         print(selected["result_list"][choice2-1]["solve_response"].replace("\n", "\n[+] "))
                         print("[+] ---------------------------------------------------------------------------------------------------")
                         print("[+] ===================================================================================================")
+                    else:
+                        print("{ Any Solution was aprouve for this question }")
 
-                    getall = str(input("[+] Do you want to get all responses ? (Y/N) :")).lower()
+
+                    entire_content = str(input("[+] Do you want to see the entire question ? (Y/N) :")).lower()
                     try:
-                        if getall == "y":
-                            print("[+] > Others responses :")
-                            print("\n[+] -")
-                            respp_count = 1
-                            for respp in selected["result_list"][choice2-1]["responses"]:
-                                print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                                print("[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes")
-                                print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                                print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
-                                respp_count += 1
-                            print("[+] -\n")
+                        if entire_content == "y":
+                            print("[+] > Content :\n--------------------------\n '"+selected["result_list"][choice2-1]["content"]+"'\n--------------------------\n")
                     except Exception as es:
                         pass
+
+                    # We check first if the numper of all others responses
+                    if len(selected["result_list"][choice2-1]["responses"]) > 0:
+                        getall = str(input("[+] Do you want to get all responses ? (Y/N) :")).lower()
+                        try:
+                            if getall == "y":
+                                print("[+] > Others responses :")
+                                print("\n[+] -")
+                                respp_count = 1
+                                for respp in selected["result_list"][choice2-1]["responses"]:
+                                    print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
+                                    print("[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes")
+                                    print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
+                                    print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
+                                    respp_count += 1
+                                print("[+] -\n")
+                        except Exception as es:
+                            pass
                     print("[+] 0-) To Back")
                     print("[+] 99-) To Exit")
                     print("[+] -----------------")
@@ -95,7 +110,6 @@ class Zeus:
 
         except Exception as es:
             print(es)
-
 
     def go(self, error):
         """
@@ -110,18 +124,21 @@ class Zeus:
         print("[+]  / /|  __/ |_| \__ \\")
         print("[+] /____\___|\__,_|___/ by S@n1x-d4rk3r (github.com/sanix-darker)")
         print("[+] ---------------------------------------------------------------------")
-        checking_message = "\r[+] Checking available solution(s) online, level : "+str(self.search_level)+"."
+        checking_message = "\r[+] Checking available solution(s) online, level("+str(self.search_level)+")."
         print(checking_message, end="")
         error = self.lang+" "+str(error)
         with open(LIST_JSON_PATH, "r") as file_:
             JSONArray = json.loads(file_.read())
             solutions = []
             for JSONObj in JSONArray:
+
                 checking_message += "."
                 print(checking_message, end="")
+
                 search_link = JSONObj['search_link'].replace("[z]", error.replace(" ", JSONObj['space_replacement']))
                 r = requests.get(search_link)
                 if r.status_code == 200:
+
                     checking_message += "."
                     print(checking_message, end="")
                     tree = html.fromstring(r.content)
@@ -132,6 +149,11 @@ class Zeus:
                         checking_message += "."
                         print(checking_message, end="")
                         link = tree.xpath(JSONObj['each']['link'])[i]
+
+                        content = ""
+                        try: content = ''.join(tree.xpath(JSONObj['each']['content']))
+                        except Exception as es: pass
+
                         if("://" not in link) :
                             link = JSONObj['link'] + link
                         source = requests.get(link)
@@ -140,7 +162,8 @@ class Zeus:
 
                         to_append =  {
                             "title": elt,
-                            "link": link
+                            "link": link,
+                            "content":content
                         }
 
                         # Getting the solution

@@ -7,6 +7,7 @@
         "each":{
             "title": "//div[@class='result-link']//h3//a/@title",
             "link": "//div[@class='result-link']//h3//a/@href",
+            "content": "//div[contains(@class, 'summary')]//div[contains(@class, 'excerpt')]//text()",
             "answers": "//div[@class='stats']//div[contains(@class, 'status')]//strong/text()",
             "votes": "//div[@class='stats']//div[contains(@class, 'vote')]//div[contains(@class, 'votes')]//span[contains(@class, 'vote-count-post')]//strong/text()"
         },

@@ -1,4 +1,3 @@
-https://stackexchange.com/
 https://www.codeproject.com/
 https://groups.google.com/forum/
 https://coderanch.com/
