@@ -31,21 +31,7 @@ No need to:
 For now Zeus can be use on :
 
 - *[Stable]* Python
-- *[On going]* Javascript(Es5)
-- *[On going]* Javascript(Es5)
-- *[On going]* React
-- *[Not yet]* AngularJs
-- *[On going]* NodeJs
-- *[Not yet]* PHP
-- *[Not yet]* Ruby
-- *[Not yet]* Perl
-- *[Not yet]* Java
-- *[Not yet]* C
-- *[Not yet]* C++
-- *[Not yet]* C#
-- *[Not yet]* Haskell
-- *[Not yet]* Dart
-- *[Not yet]* Kotlin
+- *[On going]* Javascript
 
 ## Handled Forums
 
