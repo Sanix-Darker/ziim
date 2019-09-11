@@ -109,4 +109,4 @@ python example.py
 
 ## Author
 
-- [Sanix-darker]("https://github.com/sanix-darker")
+- [Sanix-darker](https://github.com/sanix-darker)
