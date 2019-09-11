@@ -5,8 +5,21 @@ import requests
 from sys import exit
 
 LIST_JSON_PATH = "../list.json"
-MAX_RESULT = 5
-MAX_RESPONSES_PER_LINK = 6
+MAX_RESULT = 2
+MAX_RESPONSES_PER_LINK = 3
+
+class bcolors:
+    HEADER = '\033[95m' # rose
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m' # jaune
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+# print bcolors.WARNING + "Warning: No active frommets remain. Continue?" 
+#       + bcolors.ENDC
 
 class Zeus:
 
@@ -20,7 +33,6 @@ class Zeus:
         self.specific_link = specific_link
         self.search_level = search_level
 
-
     def printResult(self, solutions):
         """
         A function that return the result of solutions around the web
@@ -29,62 +41,62 @@ class Zeus:
             solutions {list} -- [The list of solutions fetched] (default: {""})
         """
         choice = 0
-        while(choice == 0):
-            print("\n\n[+] -----------------")
-            count_sol = 1
-            for sol in solutions:
-                print("[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")")
-                count_sol += 1
-            print("[+] 0-) To stop")
-            print("[+] -----------------")
-
-            choice = int(input("[+] Choose available options: "))
+        print("\n\n[+] -----------------")
+        count_sol = 1
+        for sol in solutions:
+            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
+            count_sol += 1
+        print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
+        print("[+] ------------------------")
+        choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+        if choice == 0:
+            exit()
 
         try:
-            if choice == 0:
-                exit()
-
             choice2 = 0
             while(choice2 == 0):
                 selected = solutions[choice-1]
                 print("\n\n[+] -----------------")
-                print("[+] On "+selected["title"]+"\n")
+                print(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
                 count_selected = 1
                 for select in selected["result_list"]:
-                    print("[+] "+str(count_selected)+"-) "+select["title"]+" ("+str(select["answers"])+" answers, "+str(select["votes"])+" votes)")
+                    print(bcolors.BOLD + "[+] "+str(count_selected)+"-) "+select["title"]+" ("+str(select["answers"])+" answers, "+str(select["votes"])+" votes)" + bcolors.ENDC)
                     count_selected += 1
-                print("[+] 0-) To Back")
-                print("[+] -----------------")
-
-                choice2 = int(input("[+] Choose available options: "))
+                print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
+                print("[+] ------------------------")
+                choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
 
                 try:
+                    if(choice2 == 0):
+                        print("\n\n[+] -----------------")
+                        count_sol = 1
+                        for sol in solutions:
+                            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
+                            count_sol += 1
+                        print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
+                        print("[+] ------------------------")
+                        choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+                        if choice2 == 0:
+                            exit()
+
                     print("\n\n[+] -----------------")
-                    print("[+] On "+selected["title"])
+                    print(bcolors.HEADER + "[+] On "+selected["title"] + bcolors.ENDC)
                     print("[+] > Title : '"+selected["result_list"][choice2-1]["title"]+"'")
                     print("[+] > Link : '"+selected["result_list"][choice2-1]["link"]+"'")
 
                     if len(selected["result_list"][choice2-1]["solve_response"]) > 4:
-                        print("[+] > Solution : ")
+                        print(bcolors.OKGREEN + "[+] > Solution : ")
                         print("[+] ===================================================================================================")
                         print("[+] ---------------------------------------------------------------------------------------------------")
                         print(selected["result_list"][choice2-1]["solve_response"].replace("\n", "\n[+] "))
                         print("[+] ---------------------------------------------------------------------------------------------------")
-                        print("[+] ===================================================================================================")
+                        print("[+] ===================================================================================================" + bcolors.ENDC)
                     else:
-                        print("{ Any Solution was aprouve for this question }")
-
-
-                    entire_content = str(input("[+] Do you want to see the entire question ? (Y/N) :")).lower()
-                    try:
-                        if entire_content == "y":
-                            print("[+] > Content :\n--------------------------\n '"+selected["result_list"][choice2-1]["content"]+"'\n--------------------------\n")
-                    except Exception as es:
-                        pass
+                        print(bcolors.FAIL + "{ Any Solution was approve for this question }" + bcolors.ENDC)
 
                     # We check first if the numper of all others responses
                     if len(selected["result_list"][choice2-1]["responses"]) > 0:
-                        getall = str(input("[+] Do you want to get all responses ? (Y/N) :")).lower()
+                        getall = str(input(bcolors.WARNING + "[+] Do you want to get all responses ? (Y/N) :" + bcolors.ENDC)).lower()
                         try:
                             if getall == "y":
                                 print("[+] > Others responses :")
@@ -92,17 +104,25 @@ class Zeus:
                                 respp_count = 1
                                 for respp in selected["result_list"][choice2-1]["responses"]:
                                     print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                                    print("[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes")
+                                    print(bcolors.BOLD + "[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
                                     print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
                                     print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
                                     respp_count += 1
                                 print("[+] -\n")
                         except Exception as es:
                             pass
-                    print("[+] 0-) To Back")
-                    print("[+] 99-) To Exit")
-                    print("[+] -----------------")
-                    choice2 = int(input("[+] Choose available options: "))
+
+                    entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ? (Y/N) :" + bcolors.ENDC)).lower()
+                    try:
+                        if entire_content == "y":
+                            print("[+] > Content :\n--------------------------\n '"+selected["result_list"][choice2-1]["content"]+"'\n--------------------------\n")
+                    except Exception as es:
+                        pass
+
+                    print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
+                    print(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
+                    print("[+] ------------------------")
+                    choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
                     if choice2 == 99:
                         exit()
                 except Exception as es:
@@ -112,20 +132,26 @@ class Zeus:
             print(es)
 
     def go(self, error):
+        global MAX_RESULT
+        global MAX_RESPONSES_PER_LINK
         """
         A function that return the result of solutions around the web
 
         Keyword Arguments:
             error {str} -- [The error message] (default: {""})
         """
-        print("[+] ---------------------------------------------------------------------")
-        print("[+] |__  /___ _   _ ___  ")
-        print("[+]   / // _ \ | | / __|")
-        print("[+]  / /|  __/ |_| \__ \\")
-        print("[+] /____\___|\__,_|___/ by S@n1x-d4rk3r (github.com/sanix-darker)")
-        print("[+] ---------------------------------------------------------------------")
+        print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __|"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]  / /|  __/ |_| \__ \\"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] /____\___|\__,_|___/ by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
         checking_message = "\r[+] Checking available solution(s) online, level("+str(self.search_level)+")."
         print(checking_message, end="")
+
+        MAX_RESULT += self.search_level
+        MAX_RESPONSES_PER_LINK += self.search_level
+
         error = self.lang+" "+str(error)
         with open(LIST_JSON_PATH, "r") as file_:
             JSONArray = json.loads(file_.read())
