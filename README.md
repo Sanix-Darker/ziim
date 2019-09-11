@@ -93,6 +93,12 @@ except Exception as es:
     # That's all !
 ```
 
+Run in the cli :
+```shell
+cd ./python
+python example.py
+```
+
 ## DEMO
 
 <img src="./demo.gif" />

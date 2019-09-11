@@ -1,33 +1,36 @@
-https://www.codeproject.com/
-https://groups.google.com/forum/
-https://coderanch.com/
-http://findnerd.com/
+# Zeus-python
 
-http://www.sitepoint.com/forums/
-https://teamtreehouse.com/forum
-https://news.ycombinator.com/news
-http://bytes.com/
-http://www.daniweb.com/
-http://www.dreamincode.net/forums/
-http://pineapple.io/
-https://lobste.rs/
-https://developershed.com/aboutus.php
-https://forum.xda-developers.com/
-http://forums.codeguru.com/
-http://programmersheaven.com/
-http://www.quora.com/
-http://www.designertalk.co/
-https://hashnode.com/
-http://forum.codecall.net/
-https://www.xda-developers.com/
+## How to use it
 
-Cherche all : http://gamedev.stackexchange.com/
-http://www.dreamincode.net/
-https://softwareengineering.stackexchange.com/
-https://webapps.stackexchange.com/
-http://www.reddit.com/r/programming
-https://www.sitepoint.com/community/
-https://teamtreehouse.com/community
-https://bytes.com/
-https://hackr.io/
-https://www.webdeveloper.com/
+Let's see some examples on how to use it :
+
+- In Python:
+
+Make sure you have installed all requirements in ./python/requirements.txt, by running :
+```shell
+pip install -r requirements.txt
+```
+
+```python
+# You import first Zeus Class
+import Zeus as Zeus
+# You instantiate
+zeus = Zeus.Zeus(search_level = 10) # search_level is not required and as default it's 0
+
+try:
+    # Your code here
+    test = 12/0 # This will throws an error
+except Exception as es:
+    # Then call zeus here
+    zeus.go(es)
+    # That's all !
+```
+
+Run in the cli :
+```shell
+python example.py
+```
+
+## Author
+
+- [Sanix-darker]("https://github.com/sanix-darker")
