@@ -23,13 +23,14 @@ class bcolors:
 
 class Zeus:
 
-    def __init__(self, lang = "Python", search_level = 0):
+    def __init__(self, _type = "Python", search_level = 0):
         """
         Keyword Arguments:
             search_level {int} -- [The level of searching results going from 0 to 5] (default: {0})
         """
-        self.lang = lang
+        self._type = _type
         self.search_level = search_level
+        self.checking_message = "\r[+] Checking available solution(s) online, search_level("+str(self.search_level)+")."
 
     def presentation(self):
         """
@@ -37,7 +38,7 @@ class Zeus:
         """
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __| ["+self.lang+"] version."+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __| ["+self._type+"] version."+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+]  / /|  __/ |_| \__ \\ This tool find your exception online for you."+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] /____\___|\__,_|___/ Made by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
@@ -92,7 +93,7 @@ class Zeus:
                         print("[+] ---------------------------------------------------------------------------------------------------")
                         print("[+] ===================================================================================================" + bcolors.ENDC)
                     else:
-                        print(bcolors.FAIL + "{ Any Solution was approve for this question }" + bcolors.ENDC)
+                        print(bcolors.FAIL + "[+] { Any Solution was approve for this question }" + bcolors.ENDC)
 
                     # We check first if the numper of all others responses
                     if len(selected["result_list"][choice2-1]["responses"]) > 0:
@@ -109,8 +110,7 @@ class Zeus:
                                     print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
                                     respp_count += 1
                                 print("[+] -\n")
-                        except Exception as es:
-                            pass
+                        except Exception as es: pass
 
                     entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ? (Y/N) :" + bcolors.ENDC)).lower()
                     try:
@@ -120,20 +120,16 @@ class Zeus:
                             print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
                             print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
                             print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
-                    except Exception as es:
-                        pass
+                    except Exception as es: pass
 
                     print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
                     print(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
                     print("[+] ------------------------")
                     choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
-                    if choice2 == 99:
-                        exit()
-                except Exception as es:
-                    print(es)
+                    if choice2 == 99: exit()
+                except Exception as es: print(es)
 
-        except Exception as es:
-            print(es)
+        except Exception as es: print(es)
 
 
     def buildResultList(self, elt, link, tree, JSONObj, i):
@@ -194,6 +190,10 @@ class Zeus:
         to_append["responses"] = responses_content
         return to_append
 
+    # This method will only print the waiting message
+    def checking_message_method(self):
+        self.checking_message += "."
+        return self.checking_message
 
     # ? go method
     # ! The Main method that take the eror and proceed
@@ -211,7 +211,7 @@ class Zeus:
         MAX_RESULT += self.search_level
         MAX_RESPONSES_PER_LINK += self.search_level
 
-        error = self.lang+" "+str(error).split("\n")[-1]
+        error = self._type+" "+str(error).split("\n")[-1]
         with open(LIST_JSON_PATH, "r") as file_:
             JSONArray = json.loads(file_.read())
             solutions = []
@@ -223,45 +223,37 @@ class Zeus:
             thechoice = "1"
             try:
                 thechoice = input(bcolors.WARNING + "[+] Choose ( Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow)): " + bcolors.ENDC)
-                if thechoice == "":
-                    thechoice = "1"
-            except Exception as es:
-                pass
+                if thechoice == "": thechoice = "1"
+            except Exception as es: pass
 
             selected_choice = thechoice.split(",")
 
-            checking_message = "\r[+] Checking available solution(s) online, search_level("+str(self.search_level)+")."
-            print(checking_message, end="")
+            print(self.checking_message_method(), end="")
 
             for o in range(0, len(selected_choice)):
                 JSONObj = JSONArray[int(selected_choice[o])-1]
 
-                checking_message += "."
-                print(checking_message, end="")
+                print(self.checking_message_method(), end="")
 
                 search_link = JSONObj['search_link'].replace("[z]", error.replace(" ", JSONObj['space_replacement']))
                 r = requests.get(search_link)
                 if r.status_code == 200:
 
-                    checking_message += "."
-                    print(checking_message, end="")
+                    print(self.checking_message_method(), end="")
                     tree = html.fromstring(r.content)
                     titles = tree.xpath(JSONObj['each']['title'])
                     result_list = []
                     i = 0
                     for elt in titles:
-                        checking_message += "."
-                        print(checking_message, end="")
+                        print(self.checking_message_method(), end="")
                         link = tree.xpath(JSONObj['each']['link'])[i]
 
                         to_append = self.buildResultList(elt, link, tree, JSONObj, i)
                         result_list.append(to_append)
                         i += 1
-                        if i == MAX_RESULT:
-                            break
+                        if i == MAX_RESULT: break
 
-                    checking_message += "."
-                    print(checking_message, end="")
+                    print(self.checking_message_method(), end="")
 
                     result_count = len(titles)
                     all_count = i
