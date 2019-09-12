@@ -69,10 +69,11 @@ You will have the available list in `./list.json`
 
 Let's see some examples on how to use it :
 
-- In Python:
+### In Python:
 
 Make sure you have installed all requirements in ./python/requirements.txt, by running :
 ```shell
+cd ZeusPYTHON
 pip install -r requirements.txt
 ```
 
@@ -93,8 +94,39 @@ except Exception as es:
 
 Run in the cli :
 ```shell
-cd ./python
+cd ZeusPYTHON
 python example.py
+```
+
+### In JS:
+
+Make sure you have installed all requirements in ./python/requirements.txt, by running :
+```shell
+cd ZeusJS
+yarn install
+# or npm install
+```
+
+```javascript
+import Zeus from './Zeus';
+// We instantiate Zeus
+let Zeus = new Zeus(1);
+
+try{
+    // Put your source code herer
+    const test = "Exemple"+24 // Let's generate our error here
+}catch(err){
+    console.log(err)
+    // Now call Zeus
+    Zeus.go(err)
+    // That's all
+}
+```
+
+Run in the cli :
+```shell
+cd ZeusJS
+node example.js
 ```
 
 ## DEMO
