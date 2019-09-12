@@ -60,7 +60,7 @@ class Zeus:
         choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
         if choice == 0:
             exit()
-        print("solutions: ", solutions)
+
         try:
             choice2 = 0
             while(choice2 == 0):
@@ -77,16 +77,7 @@ class Zeus:
 
                 try:
                     if(choice2 == 0):
-                        print("\n\n[+] -----------------")
-                        count_sol = 1
-                        for sol in solutions:
-                            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
-                            count_sol += 1
-                        print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
-                        print("[+] ------------------------")
-                        choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
-                        if choice2 == 0:
-                            exit()
+                        self.printResult(solutions)
 
                     print("\n\n[+] -----------------")
                     print(bcolors.HEADER + "[+] On "+selected["title"] + bcolors.ENDC)

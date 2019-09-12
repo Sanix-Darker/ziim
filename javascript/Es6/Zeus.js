@@ -84,7 +84,6 @@ class Zeus{
      */
     printResult(solutions){
 
-        let choice = 0
         console.log("\n\n[+] -----------------")
 
         const for_1 = (item, index) => {
@@ -94,47 +93,39 @@ class Zeus{
         console.log(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
         console.log("[+] ------------------------")
 
-        const get_input = this.get_input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC);
-        get_input.then((input) => {
-            choice = parseInt(input);
-            if(choice == 0){ return; }
+        const checkPoint_1 = () => {
+            let choice = 0
+            const get_input = this.get_input(bcolors.WARNING + "[+] 1Choose available options: " + bcolors.ENDC);
+            get_input.then((input) => {
+                choice = parseInt(input);
+                if(choice === 0){ process.exit(); }
+            }).catch((error) => { console.error(error); })
+            .finally(() => {
 
-            try{
-                let choice2 = 0
-                if(choice2 == 0){
-                    const selected = solutions[choice-1]
-                    console.log("\n\n[+] -----------------")
-                    console.log(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
+                try{
+                    const checkPoint_2 = () => {
+                        const selected = solutions[choice-1]
+                        console.log("\n\n[+] -----------------")
+                        console.log(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
 
-                    const for_2 = (item, index) => {
-                        console.log(bcolors.BOLD + "[+] "+(index+1).toString()+"-) "+(item["title"]).toString()+" ("+(item["answers"]).toString()+" answers, "+(item["votes"]).toString()+" votes)" + bcolors.ENDC)
-                    }
-                    selected["result_list"].forEach(for_2);
+                        const for_2 = (item, index) => {
+                            console.log(bcolors.BOLD + "[+] "+(index+1).toString()+"-) "+(item["title"]).toString()+" ("+(item["answers"]).toString()+" answers, "+(item["votes"]).toString()+" votes)" + bcolors.ENDC)
+                        }
+                        selected["result_list"].forEach(for_2);
 
-                    console.log(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
-                    console.log("[+] ------------------------")
+                        console.log(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
+                        console.log("[+] ------------------------")
 
-                    const get_input2 = this.get_input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC);
-                    get_input2.then((input) => {
-                        choice2 = parseInt(input);
-
-                        try{
-                            if(choice2 == 0){
-                                console.log("\n\n[+] -----------------")
-
-                                const for_3 = (item, index) => {
-                                    console.log(bcolors.BOLD + "[+] "+(index+1).toString()+"-) "+item["title"]+" ("+(item["all_count"]).toString()+" / "+(item["result_count"]).toString()+")" + bcolors.ENDC)
+                        let choice2 = 0
+                        const get_input2 = this.get_input(bcolors.WARNING + "[+] 2Choose available options: " + bcolors.ENDC);
+                        get_input2.then((input) => {
+                            choice2 = parseInt(input);
+                        }).catch((error) => { console.error(error); })
+                        .finally(() => {
+                            try{
+                                if(choice2 == 0){
+                                    this.printResult(solutions);
                                 }
-                                solutions.forEach(for_3);
-
-                                console.log(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
-                                console.log("[+] ------------------------")
-
-                            }
-                            const get_input3 = this.get_input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC);
-                            get_input3.then((input) => {
-                                choice2 = parseInt(input);
-                                if(choice2 == 0){ return; }
 
                                 console.log("\n\n[+] -----------------")
                                 console.log(bcolors.HEADER + "[+] On "+selected["title"] + bcolors.ENDC)
@@ -152,13 +143,41 @@ class Zeus{
                                     console.log(bcolors.FAIL + "{ Any Solution was approve for this question }" + bcolors.ENDC)
                                 }
 
+                                const entireQuestionOrStop = () => {
+                                    let entire_content = ""
+                                    const get_input5 = this.get_input(bcolors.WARNING + "[+] Do you want to see the entire question ? (Y/N) :" + bcolors.ENDC);
+                                    get_input5.then((input) => {
+                                        entire_content = (input).toString().toLowerCase();
+                                    }).catch((error) => { console.error(error); })
+                                    .finally(() => {
+                                        try{
+                                            if (entire_content == "y"){
+                                                console.log("[+] > Content :\n--------------------------\n '"+selected["result_list"][choice2-1]["content"]+"'\n--------------------------\n")
+                                            }
+                                        }catch(err){console.log(err)}
+
+                                        console.log(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
+                                        console.log(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
+                                        console.log("[+] ------------------------")
+
+                                        const get_input6 = this.get_input(bcolors.WARNING + "[+] 4Choose available options: " + bcolors.ENDC);
+                                        get_input6.then((input) => {
+                                            choice2 = parseInt(input);
+                                            if(choice2 == 0){ checkPoint_2() }
+                                            if(choice2 == 99){ process.exit(); }
+                                        });
+
+                                    });
+                                }
+
                                 //We check first if the numper of all others responses
                                 if (selected["result_list"][choice2-1]["responses"].length > 0){
-
+                                    let getall = ""
                                     const get_input4 = this.get_input(bcolors.WARNING + "[+] Do you want to get all responses ? (Y/N) :" + bcolors.ENDC);
                                     get_input4.then((input) => {
                                         getall = (input).toString().toLowerCase();
-
+                                    }).catch((error) => { console.error(error); })
+                                    .finally(() => {
                                         try{
                                             if (getall == "y"){
                                                 console.log("[+] > Others responses :")
@@ -175,37 +194,19 @@ class Zeus{
                                                 console.log("[+] -\n")
                                             }
                                         }catch(err){console.log(err)}
+                                        entireQuestionOrStop();
                                     });
+                                }else{
+                                    entireQuestionOrStop();
                                 }
-
-                                const get_input5 = this.get_input(bcolors.WARNING + "[+] Do you want to see the entire question ? (Y/N) :" + bcolors.ENDC);
-                                get_input5.then((input) => {
-                                    getall = (input).toString().toLowerCase();
-                                    try{
-                                        if (entire_content == "y"){
-                                            console.log("[+] > Content :\n--------------------------\n '"+selected["result_list"][choice2-1]["content"]+"'\n--------------------------\n")
-                                        }
-                                    }catch(err){console.log(err)}
-
-                                    console.log(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
-                                    console.log(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
-                                    console.log("[+] ------------------------")
-
-                                    const get_input6 = this.get_input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC);
-                                    get_input6.then((input) => {
-                                        choice2 = parseInt(input);
-                                        if(choice2 == 0){ return; }
-                                    });
-
-                                });
-                            })
-                        }catch(err){console.log(err)}
-
-                    });
-
-                }
-            }catch(err){console.log(err)}
-        });
+                            }catch(err){console.log(err)}
+                        });
+                    }
+                    checkPoint_2();
+                }catch(err){console.log(err)}
+            });
+        }
+        checkPoint_1();
     }
 }
 
