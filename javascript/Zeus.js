@@ -1,27 +1,21 @@
 const axios = require('axios');
 
-LIST_JSON_PATH = "../list.json"
-MAX_RESULT = 2
-MAX_RESPONSES_PER_LINK = 3
+const LIST_JSON_PATH = "../list.json"
+const MAX_RESULT = 2
+const MAX_RESPONSES_PER_LINK = 3
 
 class Bcolors{
 
     constructor(){
-        // this.HEADER = '\\033[95m';
-        // this.OKBLUE = '\\033[94m';
-        // this.OKGREEN = '\\033[92m';
-        // this.WARNING = '\\033[93m';
-        // this.FAIL = '\\033[91m';
-        // this.ENDC = '\\033[0m';
-        // this.BOLD = '\\033[1m';
-        // this.UNDERLINE = "\\033[4m";
-        this.HEADER = '';
-        this.OKBLUE = '';
-        this.OKGREEN = '';
-        this.WARNING = '';
-        this.FAIL = '';
-        this.ENDC = '';
-        this.BOLD = '';
+
+        this.HEADER = "\x1b[35m";
+        this.OKBLUE = "\x1b[34m";
+        this.OKGREEN = "\x1b[32m";
+        this.WARNING = "\x1b[33m";
+        this.FAIL = "\x1b[31m";
+        this.ENDC = "\x1b[37m";
+        this.BOLD = "\x1b[36m";
+        this.BLACK = "\x1b[30m";
         this.UNDERLINE = '';
     }
 }
@@ -37,7 +31,7 @@ class Zeus{
             Keyword Arguments:
                 specific_link {list} -- [list of specific link, where to find] (functionault: {[]})
                 search_level {int} -- [The level of searching results going from 0 to 5] (functionault: {0})
-         */
+        */
         this._type = "Javascript"
         this.search_level = search_level
     };
