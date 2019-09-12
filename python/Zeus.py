@@ -37,7 +37,7 @@ class Zeus:
         """
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __|"+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __| ["+self.lang+"] version."+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+]  / /|  __/ |_| \__ \\ This tool find your exception online for you."+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] /____\___|\__,_|___/ Made by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
