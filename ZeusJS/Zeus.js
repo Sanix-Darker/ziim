@@ -275,7 +275,6 @@ class Zeus{
         to_append["responses"] = responses_content
         return to_append
 
-
 }
 
 

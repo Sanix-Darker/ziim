@@ -219,6 +219,7 @@ class Zeus:
             solution_count = 1
             for JSONObj in JSONArray:
                 print(bcolors.BOLD + "[+] "+str(solution_count)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
+                solution_count += 1
 
             thechoice = "1"
             try:
