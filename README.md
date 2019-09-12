@@ -37,9 +37,9 @@ For now Zeus can be use on :
 
 For Now, Zeus can find on:
 
-- [Done]StackOverflow
-- *[Not yet]* StackExchange
-- *[Not yet]* Codeproject
+- *[Done]* StackOverflow
+- *[Done]* StackExchange
+- *[Done]* Codeproject
 - *[Not yet]* GroupsGoogle
 - *[Not yet]* CodeRanch
 - *[Not yet]* FindNerd

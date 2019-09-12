@@ -24,11 +24,27 @@
             "title": "//div[@class='result-link']//span//a/text()",
             "link": "//div[@class='result-link']//span//a/@href",
             "content": "//div[contains(@class, 'summary')]//div[contains(@class, 'excerpt')]//text()",
-            "answers": "//div[@class='stats']//div[contains(@class, 'status')]//strong/text()",
-            "votes": "//div[@class='stats']//div[contains(@class, 'vote')]//div[contains(@class, 'votes')]//span[contains(@class, 'vote-count-post')]//strong/text()"
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
         },
         "responses":"//div[@id='answers']//div[contains(@class, 'answer')]//div[contains(@class, 'post-text')]",
         "responses_vote":"//div[@id='answers']//div[contains(@class, 'votecell')]//div[contains(@class, 'vote-count')]/@data-value",
         "solve_response":"//div[@id='answers']//div[contains(@class, 'accepted-answer')]//div[contains(@class, 'post-text')]"
+    },
+    {
+        "title":"CodeProject",
+        "link":"https://www.codeproject.com",
+        "search_link":"https://www.codeproject.com/search.aspx?q=[z]&doctypeid=4",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[contains(@class, 'content-list-item')]//div[@class='entry']//span[@class='title']//a/text()",
+            "link": "//div[contains(@class, 'content-list-item')]//div[@class='entry']//span[@class='title']//a/@href",
+            "content": "//div[contains(@class, 'summary')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[@class='text']",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@itemprop='acceptedAnswer']"
     }
 ]

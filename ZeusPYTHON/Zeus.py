@@ -198,70 +198,74 @@ class Zeus:
     # ? go method
     # ! The Main method that take the eror and proceed
     def go(self, error):
-        global MAX_RESULT
-        global MAX_RESPONSES_PER_LINK
-        """
-        A function that return the result of solutions around the web
+        try:
+            global MAX_RESULT
+            global MAX_RESPONSES_PER_LINK
+            """
+            A function that return the result of solutions around the web
 
-        Keyword Arguments:
-            error {str} -- [The error message] (default: {""})
-        """
-        self.presentation()
+            Keyword Arguments:
+                error {str} -- [The error message] (default: {""})
+            """
+            self.presentation()
 
-        MAX_RESULT += self.search_level
-        MAX_RESPONSES_PER_LINK += self.search_level
+            MAX_RESULT += self.search_level
+            MAX_RESPONSES_PER_LINK += self.search_level
 
-        error = self._type+" "+str(error).split("\n")[-1]
-        with open(LIST_JSON_PATH, "r") as file_:
-            JSONArray = json.loads(file_.read())
-            solutions = []
-            print("[+] Where do you want to find solutions: ")
-            solution_count = 1
-            for JSONObj in JSONArray:
-                print(bcolors.BOLD + "[+] "+str(solution_count)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
-                solution_count += 1
+            error = self._type+" "+str(error).split("\n")[-1]
+            with open(LIST_JSON_PATH, "r") as file_:
+                JSONArray = json.loads(file_.read())
+                solutions = []
+                print("[+] Where do you want to find solutions: ")
+                solution_count = 1
+                for JSONObj in JSONArray:
+                    print(bcolors.BOLD + "[+] "+str(solution_count)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
+                    solution_count += 1
 
-            thechoice = "1"
-            try:
-                thechoice = input(bcolors.WARNING + "[+] Choose ( Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow)): " + bcolors.ENDC)
-                if thechoice == "": thechoice = "1"
-            except Exception as es: pass
+                thechoice = "1"
+                try:
+                    thechoice = input(bcolors.WARNING + "[+] Choose ( Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow)): " + bcolors.ENDC)
+                    if thechoice == "": thechoice = "1"
+                except Exception as es: pass
 
-            selected_choice = thechoice.split(",")
-
-            print(self.checking_message_method(), end="")
-
-            for o in range(0, len(selected_choice)):
-                JSONObj = JSONArray[int(selected_choice[o])-1]
+                selected_choice = thechoice.split(",")
 
                 print(self.checking_message_method(), end="")
 
-                search_link = JSONObj['search_link'].replace("[z]", error.replace(" ", JSONObj['space_replacement']))
-                r = requests.get(search_link)
-                if r.status_code == 200:
+                for o in range(0, len(selected_choice)):
+                    JSONObj = JSONArray[int(selected_choice[o])-1]
 
                     print(self.checking_message_method(), end="")
-                    tree = html.fromstring(r.content)
-                    titles = tree.xpath(JSONObj['each']['title'])
-                    result_list = []
-                    i = 0
-                    for elt in titles:
+
+                    search_link = JSONObj['search_link'].replace("[z]", error.replace(" ", JSONObj['space_replacement']))
+                    r = requests.get(search_link)
+                    if r.status_code == 200:
+
                         print(self.checking_message_method(), end="")
-                        link = tree.xpath(JSONObj['each']['link'])[i]
+                        tree = html.fromstring(r.content)
+                        titles = tree.xpath(JSONObj['each']['title'])
+                        result_list = []
+                        i = 0
+                        for elt in titles:
+                            print(self.checking_message_method(), end="")
+                            link = tree.xpath(JSONObj['each']['link'])[i]
 
-                        to_append = self.buildResultList(elt, link, tree, JSONObj, i)
-                        result_list.append(to_append)
-                        i += 1
-                        if i == MAX_RESULT: break
+                            to_append = self.buildResultList(elt, link, tree, JSONObj, i)
+                            result_list.append(to_append)
+                            i += 1
+                            if i == MAX_RESULT: break
 
-                    print(self.checking_message_method(), end="")
+                        print(self.checking_message_method(), end="")
 
-                    result_count = len(titles)
-                    all_count = i
-                    solutions.append( {
-                        "title": JSONObj['title'],
-                        "result_count": result_count,
-                        "all_count": all_count,
-                        "result_list": result_list
-                    })
-            self.printResult( solutions )
+                        result_count = len(titles)
+                        all_count = i
+                        solutions.append( {
+                            "title": JSONObj['title'],
+                            "result_count": result_count,
+                            "all_count": all_count,
+                            "result_list": result_list
+                        })
+                self.printResult( solutions )
+        except Exception as es:
+            print("\n[+] ERROR on ZEUS, something bad happens with the selected option, check the error below:")
+            print(es)
