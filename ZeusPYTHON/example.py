@@ -1,5 +1,5 @@
 import Zeus as Zeus
-zeus = Zeus.Zeus(search_level = 3)
+zeus = Zeus.Zeus(search_level = 1)
 
 try:
     # Your code here

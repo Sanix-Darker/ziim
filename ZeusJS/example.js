@@ -1,6 +1,6 @@
 import Zeus from './Zeus';
 // We instantiate Zeus
-let Zeus = new Zeus(3);
+let Zeus = new Zeus(1);
 
 try{
     // Put your source code herer
