@@ -34,6 +34,7 @@ class Zeus{
         */
         this._type = "Javascript"
         this.search_level = search_level
+        this.checking_message = "\r[+] Checking available solution(s) online, search_level("+(this.search_level).toString()+")."
     };
 
     /**
@@ -201,6 +202,80 @@ class Zeus{
         }
         checkPoint_1();
     }
+
+
+    // This method will only print the waiting message
+    // process.stdout.write(this.checking_message+"\r");
+    checking_message_method(){
+        this.checking_message += "."
+        return this.checking_message
+    }
+
+    buildResultList(elt, link, tree, JSONObj, i):
+    /**
+    * [This method have the role on building the result_list]
+
+        Arguments:
+            elt {[type]} -- [element from the array of titles]
+            link {[str]} -- [The link]
+            content {[str]} -- [The content of the question]
+            tree {[xpath]} -- [description]
+            tree2 {[xpath]} -- [description]
+            JSONObj {[json]} -- [description]
+    */
+        const content = ""
+        try{
+            ''.join(tree.xpath(JSONObj['each']['content']))
+        }catch(err){
+
+        }
+
+        if("://" not in link){
+            link = JSONObj['link'] + link
+        }
+
+        const source = requests.get(link)
+        // The tree2 for sub-requests
+        tree2 = html.fromstring(source.content)
+
+        to_append =  {
+            "title": elt,
+            "link": link,
+            "content":content
+        }
+        # Getting the solution
+        to_append["solve_response"] = ""
+        try: to_append["solve_response"] = ''.join(tree2.xpath(JSONObj['solve_response'])[0].xpath('.//text()'))
+        except Exception as es: pass
+
+        # Getting the number of answers
+        to_append["answers"] = 0
+        try: to_append["answers"] = int(tree.xpath(JSONObj['each']['answers'])[i])
+        except Exception as es: pass
+
+        # Getting the number of votes
+        to_append["votes"] = 0
+        try: to_append["votes"] = int(tree.xpath(JSONObj['each']['votes'])[i])
+        except Exception as es: pass
+
+        # Getting the list of all response
+        responses_content = []
+        responses_count = 0
+        for rep in tree2.xpath(JSONObj['responses']):
+            # On recuperes uniquement des elements qui ne sont pas de la reponse
+            if ''.join(rep.xpath('.//text()')) != to_append["solve_response"] :
+                votes_per_response = 0
+                try: votes_per_response = int(tree2.xpath(JSONObj['responses_vote'])[responses_count])
+                except Exception as es: pass
+                responses_content.append( { "votes": votes_per_response, "content":''.join(rep.xpath('.//text()'))})
+            responses_count += 1
+            if responses_count == MAX_RESPONSES_PER_LINK:
+                break
+        # Adding in the to_append
+        to_append["responses"] = responses_content
+        return to_append
+
+
 }
 
 
