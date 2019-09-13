@@ -1,6 +1,4 @@
 
-<img scr="./images/logo.png" />
-
 # Zeus
 
 Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
@@ -40,9 +38,7 @@ For Now, Zeus can find on:
 - *[Done]* StackOverflow
 - *[Done]* StackExchange
 - *[Done]* Codeproject
-- *[Not yet]* GroupsGoogle
 - *[Not yet]* CodeRanch
-- *[Not yet]* FindNerd
 - *[Not yet]* SitePoint
 - *[Not yet]* Teamtreehouse
 - *[Not yet]* ycombinator
