@@ -1,5 +1,5 @@
 
-<img scr="logo.png" />
+<img scr="./images/logo.png" />
 
 # Zeus
 
@@ -19,11 +19,11 @@ YOU GET IT ?\
 
 No need to:
 
-- `copy the Exception`, 
-- `Minimize your terminal`, 
-- `Open the browser`, 
-- `Paste it on google or any searchEngine`, 
-- `Open multiple tabs per result`, 
+- `copy the Exception`,
+- `Minimize your terminal`,
+- `Open the browser`,
+- `Paste it on google or any searchEngine`,
+- `Open multiple tabs per result`,
 - `fetching where the solution of your problem could be`...
 
 ## Available versions of Zeus
@@ -131,7 +131,7 @@ node example.js
 
 ## DEMO
 
-<img src="./demo.gif" />
+<img src="./images/demo.gif" />
 
 ## Author
 
