@@ -30,7 +30,7 @@ class Zeus:
         """
         self._type = _type
         self.search_level = search_level
-        self.checking_message = "\r[+] Checking available solution(s) online, search_level("+str(self.search_level)+")."
+        self.checking_message = "\r[+] Checking available solution(s) online."
 
     def presentation(self):
         """
@@ -59,8 +59,7 @@ class Zeus:
         print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
         print("[+] ------------------------")
         choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
-        if choice == 0:
-            exit()
+        if choice == 0: exit()
 
         try:
             choice2 = 0
@@ -77,8 +76,7 @@ class Zeus:
                 choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
 
                 try:
-                    if(choice2 == 0):
-                        self.printResult(solutions)
+                    if(choice2 == 0): self.printResult(solutions)
 
                     print("\n\n[+] -----------------")
                     print(bcolors.HEADER + "[+] On "+selected["title"] + bcolors.ENDC)
@@ -184,8 +182,7 @@ class Zeus:
                 except Exception as es: pass
                 responses_content.append( { "votes": votes_per_response, "content":''.join(rep.xpath('.//text()'))})
             responses_count += 1
-            if responses_count == MAX_RESPONSES_PER_LINK:
-                break
+            if responses_count == MAX_RESPONSES_PER_LINK: break
         # Adding in the to_append
         to_append["responses"] = responses_content
         return to_append
@@ -231,12 +228,10 @@ class Zeus:
                 selected_choice = thechoice.split(",")
 
                 print(self.checking_message_method(), end="")
-
                 for o in range(0, len(selected_choice)):
                     JSONObj = JSONArray[int(selected_choice[o])-1]
 
                     print(self.checking_message_method(), end="")
-
                     search_link = JSONObj['search_link'].replace("[z]", error.replace(" ", JSONObj['space_replacement']))
                     r = requests.get(search_link)
                     if r.status_code == 200:
@@ -256,7 +251,6 @@ class Zeus:
                             if i == MAX_RESULT: break
 
                         print(self.checking_message_method(), end="")
-
                         result_count = len(titles)
                         all_count = i
                         solutions.append( {
