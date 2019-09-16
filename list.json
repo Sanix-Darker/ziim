@@ -32,7 +32,7 @@
         "solve_response":"//div[@id='answers']//div[contains(@class, 'accepted-answer')]//div[contains(@class, 'post-text')]"
     },
     {
-        "title":"SitePoint",
+        "title":"SitePoint[AJAX] not handle",
         "link":"https://www.sitepoint.com",
         "search_link":"https://www.sitepoint.com/community/search?q=[z]",
         "space_replacement": "%20",
@@ -48,7 +48,7 @@
         "solve_response":"//div[@itemprop='acceptedAnswer']"
     },
     {
-        "title":"CodeProject",
+        "title":"CodeProject[AJAX] not handle",
         "link":"https://www.codeproject.com",
         "search_link":"https://www.codeproject.com/search.aspx?q=[z]&doctypeid=4",
         "space_replacement": "+",

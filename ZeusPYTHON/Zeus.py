@@ -4,6 +4,8 @@ from lxml import html, etree
 import requests
 from sys import exit
 
+import urllib.parse
+
 LIST_JSON_PATH = "../list.json"
 MAX_RESULT = 2
 MAX_RESPONSES_PER_LINK = 3
@@ -34,6 +36,9 @@ class Zeus:
         self.search_level = search_level
         self.checking_message = "\r[+] Checking available solution(s) online."
 
+    def urlEncode(self, __string):
+        return urllib.parse.quote(__string)
+
     def presentation(self):
         """
         A simple function for the header of Zeus
@@ -59,7 +64,7 @@ class Zeus:
             for sol in solutions:
                 print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
                 count_sol += 1
-            print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Upgrade the search level(0-10)" + bcolors.ENDC)
+            print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
             print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
             print("[+] ------------------------")
             choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
@@ -243,7 +248,8 @@ class Zeus:
                     JSONObj = JSONArray[int(selected_choice[o])-1]
 
                     print(self.checking_message_method(), end="")
-                    search_link = JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement']))
+                    search_link = JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement']).replace('"', '').replace("'", ""))
+
                     r = requests.get(search_link)
                     if r.status_code == 200:
 
