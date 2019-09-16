@@ -34,7 +34,7 @@ class Zeus:
         self.presentation_shows = False
         self._type = _type
         self.search_level = search_level
-        self.checking_message = "\r[+] Checking available solution(s) online."
+        self.checking_message = "\r[+] Checking available solution(s) online"
 
     def urlEncode(self, __string):
         return urllib.parse.quote(__string)
@@ -58,28 +58,24 @@ class Zeus:
             solutions {list} -- [The list of solutions fetched] (default: {""})
         """
         choice = 0
-        def checkpoint_1():
-            print("\n\n[+] -----------------")
-            count_sol = 1
-            for sol in solutions:
-                print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
-                count_sol += 1
-            print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
-            print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
-            print("[+] ------------------------")
-            choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
-            if choice == 0: exit()
-            if choice == 88:
-                try:
-                    self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
-                    self.go(self.error)
-                except:
-                    checkpoint_1()
-        checkpoint_1()
+        print("\n\n[+] -----------------")
+        count_sol = 1
+        for sol in solutions:
+            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
+            count_sol += 1
+        print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
+        print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
+        print("[+] ------------------------")
+        choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+        if choice == 0: exit()
+        if choice == 88:
+            self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
+            self.go(self.error)
+
         try:
             choice2 = 0
-            while(choice2 == 0):
-                selected = solutions[choice-1]
+            def checkpoint_2(ch):
+                selected = solutions[ch-1]
                 print("\n\n[+] -----------------")
                 print(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
                 count_selected = 1
@@ -140,7 +136,11 @@ class Zeus:
                     print("[+] ------------------------")
                     choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
                     if choice2 == 99: exit()
+                    if choice2 == 0: checkpoint_2(choice)
                 except Exception as es: print(es)
+
+            # if the choice is 0 then the checkpoint 2 will loop
+            checkpoint_2(choice)
 
         except Exception as es: print(es)
 
@@ -229,6 +229,7 @@ class Zeus:
             with open(LIST_JSON_PATH, "r") as file_:
                 JSONArray = json.loads(file_.read())
                 solutions = []
+                self.checking_message = "\r[+] Checking available solution(s) online"
                 print("[+] Where do you want to find solutions: ")
                 solution_count = 1
                 for JSONObj in JSONArray:
