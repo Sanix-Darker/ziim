@@ -1,6 +1,3 @@
-
-http://www.sitepoint.com/forums/
-https://teamtreehouse.com/forum
 https://news.ycombinator.com/news
 http://bytes.com/
 http://www.daniweb.com/

@@ -159,7 +159,7 @@ class Zeus:
         try: content = ''.join(tree.xpath(JSONObj['each']['content']))
         except Exception as es: pass
 
-        if("://" not in link):
+        if("://" not in link and "www." not in link):
             link = JSONObj['link'] + link
         source = requests.get(link)
         # The tree2 for sub-requests
@@ -254,16 +254,26 @@ class Zeus:
                     if r.status_code == 200:
 
                         print(self.checking_message_method(), end="")
+
                         tree = html.fromstring(r.content)
                         titles = tree.xpath(JSONObj['each']['title'])
                         result_list = []
                         i = 0
                         for elt in titles:
+
                             print(self.checking_message_method(), end="")
                             link = tree.xpath(JSONObj['each']['link'])[i]
 
-                            to_append = self.buildResultList(elt, link, tree, JSONObj, i)
-                            result_list.append(to_append)
+                            if "http" not in link:
+                                if JSONObj["link"] not in link and "www" not in link:
+                                    link = JSONObj["link"] + link
+                                else:
+                                    link = "http://"+link.split("//")[1]
+
+                            try:
+                                to_append = self.buildResultList(elt, link, tree, JSONObj, i)
+                                result_list.append(to_append)
+                            except: pass
                             i += 1
                             if i == MAX_RESULT: break
 
