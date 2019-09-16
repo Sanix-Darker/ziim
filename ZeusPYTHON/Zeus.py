@@ -28,6 +28,8 @@ class Zeus:
         Keyword Arguments:
             search_level {int} -- [The level of searching results going from 0 to 5] (default: {0})
         """
+        self.error = ""
+        self.presentation_shows = False
         self._type = _type
         self.search_level = search_level
         self.checking_message = "\r[+] Checking available solution(s) online."
@@ -51,16 +53,24 @@ class Zeus:
             solutions {list} -- [The list of solutions fetched] (default: {""})
         """
         choice = 0
-        print("\n\n[+] -----------------")
-        count_sol = 1
-        for sol in solutions:
-            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
-            count_sol += 1
-        print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
-        print("[+] ------------------------")
-        choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
-        if choice == 0: exit()
-
+        def checkpoint_1():
+            print("\n\n[+] -----------------")
+            count_sol = 1
+            for sol in solutions:
+                print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
+                count_sol += 1
+            print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Upgrade the search level(0-10)" + bcolors.ENDC)
+            print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
+            print("[+] ------------------------")
+            choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+            if choice == 0: exit()
+            if choice == 88:
+                try:
+                    self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
+                    self.go(self.error)
+                except:
+                    checkpoint_1()
+        checkpoint_1()
         try:
             choice2 = 0
             while(choice2 == 0):
@@ -132,14 +142,13 @@ class Zeus:
 
     def buildResultList(self, elt, link, tree, JSONObj, i):
         """[This method have the role on building the result_list]
-
-        Arguments:
-            elt {[type]} -- [element from the array of titles]
-            link {[str]} -- [The link]
-            content {[str]} -- [The content of the question]
-            tree {[xpath]} -- [description]
-            tree2 {[xpath]} -- [description]
-            JSONObj {[json]} -- [description]
+            Arguments:
+                elt {[type]} -- [element from the array of titles]
+                link {[str]} -- [The link]
+                content {[str]} -- [The content of the question]
+                tree {[xpath]} -- [description]
+                tree2 {[xpath]} -- [description]
+                JSONObj {[json]} -- [description]
         """
         content = ""
         try: content = ''.join(tree.xpath(JSONObj['each']['content']))
@@ -204,12 +213,14 @@ class Zeus:
             Keyword Arguments:
                 error {str} -- [The error message] (default: {""})
             """
-            self.presentation()
+            if self.presentation_shows == False:
+                self.presentation()
+                self.presentation_shows = True
 
             MAX_RESULT += self.search_level
             MAX_RESPONSES_PER_LINK += self.search_level
 
-            error = self._type+" "+str(error).split("\n")[-1]
+            self.error = self._type+" "+str(error).split("\n")[-1]
             with open(LIST_JSON_PATH, "r") as file_:
                 JSONArray = json.loads(file_.read())
                 solutions = []
@@ -232,7 +243,7 @@ class Zeus:
                     JSONObj = JSONArray[int(selected_choice[o])-1]
 
                     print(self.checking_message_method(), end="")
-                    search_link = JSONObj['search_link'].replace("[z]", error.replace(" ", JSONObj['space_replacement']))
+                    search_link = JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement']))
                     r = requests.get(search_link)
                     if r.status_code == 200:
 
