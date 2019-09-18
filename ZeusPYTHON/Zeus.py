@@ -291,9 +291,11 @@ class Zeus:
                                     link = "http://"+link.split("//")[1]
 
                             try:
-                                to_append = self.buildResultList(elt, link, tree, JSONObj, i)
-                                result_list.append(to_append)
-                            except: pass
+                                result_list.append(self.buildResultList(elt, link, tree, JSONObj, i))
+                            except Exception as es: 
+                                print(es)
+                                self.go(self.error)
+
                             i += 1
                             if i == MAX_RESULT: break
 
