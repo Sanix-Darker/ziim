@@ -222,10 +222,7 @@ class Zeus:
         print(self.checking_message_method(), end="")
 
     def replaceSPECIALCARACTER(self, __string):
-        special_caracter = ["'", '"', "@"]
-        for sp in special_caracter:
-            __string.replace(sp, "")
-        return __string
+        return __string.replace("'", "").replace('"', '').replace('@', '')
 
     # ? go method
     # ! The Main method that take the eror and proceed
@@ -246,7 +243,7 @@ class Zeus:
             MAX_RESULT += self.search_level
             MAX_RESPONSES_PER_LINK += self.search_level
 
-            self.error = self._type+" "+str(error).split("\n")[-1]
+            self.error = str(error).split("\n")[-1]
             with open(LIST_JSON_PATH, "r") as file_:
                 JSONArray = json.loads(file_.read())
                 solutions = []

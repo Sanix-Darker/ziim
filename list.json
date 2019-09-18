@@ -48,6 +48,22 @@
         "solve_response":"//div[@itemprop='acceptedAnswer']"
     },
     {
+        "title":"CodeRanch",
+        "link":"https://coderanch.com",
+        "search_link":"https://coderanch.com/forums/search/search/-1?match_type=all&sort_by=time&groupByTopic=true&q=[z]",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[@class='topicinfoheader']//div[@class='subjectsection']//a[@class='subject']/text()",
+            "link": "//div[@class='topicinfoheader']//div[@class='subjectsection']//a[@class='subject']/@href",
+            "content": "//div[contains(@class, 'posts')]//td[contains(@class, 'row1')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[contains(@class, 'postText')]",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@class='nothing-yet']"
+    },
+    {
         "title":"SitePoint [AJAX] not handle",
         "link":"https://www.sitepoint.com",
         "search_link":"https://www.sitepoint.com/community/search?q=[z]",

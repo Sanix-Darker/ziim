@@ -38,17 +38,8 @@ For Now, Zeus can find on:
 - *[Done]* StackOverflow
 - *[Done]* StackExchange
 - *[Done]* Codeproject
-- *[Not yet]* CodeRanch
-- *[Not yet]* SitePoint
-- *[Not yet]* Teamtreehouse
-- *[Not yet]* ycombinator
-- *[Not yet]* Bytes
-- *[Not yet]* Daniweb
-- *[Not yet]* Dreamincode
-- *[Not yet]* Pineapple
-- *[Not yet]* lobste
-- *[Not yet]* developershed
-- *[Not yet]* xda-developers
+- *[Done]* CodeRanch
+- *[Done]* SitePoint
 - *[Not yet]* Codeguru
 - *[Not yet]* ProgrammersHeaven
 - *[Not yet]* Quora
