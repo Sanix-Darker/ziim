@@ -1,5 +1,6 @@
 
 <img src="./images/logo.png" />
+
 # Zeus
 
 Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
