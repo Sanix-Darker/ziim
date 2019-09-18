@@ -1,6 +1,6 @@
 import json
 
-from lxml import html, etree
+from lxml import html
 import requests
 from sys import exit
 
@@ -206,6 +206,9 @@ class Zeus:
         self.checking_message += "."
         return self.checking_message
 
+    def wainting(self):
+        print(self.checking_message_method(), end="")
+
     # ? go method
     # ! The Main method that take the eror and proceed
     def go(self, error):
@@ -244,25 +247,22 @@ class Zeus:
 
                 selected_choice = thechoice.split(",")
 
-                print(self.checking_message_method(), end="")
+                self.wainting()
                 for o in range(0, len(selected_choice)):
                     JSONObj = JSONArray[int(selected_choice[o])-1]
 
-                    print(self.checking_message_method(), end="")
+                    self.wainting()
                     search_link = JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement']).replace('"', '').replace("'", ""))
 
                     r = requests.get(search_link)
                     if r.status_code == 200:
-
-                        print(self.checking_message_method(), end="")
-
+                        self.wainting()
                         tree = html.fromstring(r.content)
                         titles = tree.xpath(JSONObj['each']['title'])
                         result_list = []
                         i = 0
                         for elt in titles:
-
-                            print(self.checking_message_method(), end="")
+                            self.wainting()
                             link = tree.xpath(JSONObj['each']['link'])[i]
 
                             if "http" not in link:
@@ -278,7 +278,7 @@ class Zeus:
                             i += 1
                             if i == MAX_RESULT: break
 
-                        print(self.checking_message_method(), end="")
+                        self.wainting()
                         result_count = len(titles)
                         all_count = i
                         solutions.append( {
