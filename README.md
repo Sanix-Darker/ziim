@@ -1,4 +1,5 @@
 
+<img src="./images/logo.png" />
 # Zeus
 
 Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
@@ -64,10 +65,11 @@ cd ZeusPYTHON
 pip install -r requirements.txt
 ```
 
+In the code :
+
 ```python
-# You import first Zeus Class
+# You import first Zeus Class and instantiate it
 import Zeus as Zeus
-# You instantiate
 zeus = Zeus.Zeus(search_level = 10) # search_level is not required and as default it's 0
 
 try:
@@ -82,6 +84,7 @@ except Exception as es:
 Run in the cli :
 ```shell
 cd ZeusPYTHON
+
 python example.py
 ```
 
@@ -90,13 +93,16 @@ python example.py
 Make sure you have installed all requirements in ./python/requirements.txt, by running :
 ```shell
 cd ZeusJS
+
 yarn install
 # or npm install
 ```
 
+In the code :
+
 ```javascript
+// You import first Zeus Class and instantiate it
 import Zeus from './Zeus';
-// We instantiate Zeus
 let Zeus = new Zeus(1);
 
 try{
@@ -113,6 +119,7 @@ try{
 Run in the cli :
 ```shell
 cd ZeusJS
+
 node example.js
 ```
 
