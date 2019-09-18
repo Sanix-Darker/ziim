@@ -104,31 +104,45 @@ class Zeus:
                     else:
                         print(bcolors.FAIL + "[+] { Any Solution was approve for this question }" + bcolors.ENDC)
 
-                    # We check first if the numper of all others responses
-                    if len(selected["result_list"][choice2-1]["responses"]) > 0:
-                        getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? (Y/N) :" + bcolors.ENDC)).lower()
-                        try:
-                            if getall == "y":
-                                print("[+] > Others responses :")
-                                print("\n[+] -")
-                                respp_count = 1
-                                for respp in selected["result_list"][choice2-1]["responses"]:
-                                    print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                                    print(bcolors.BOLD + "[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
-                                    print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                                    print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
-                                    respp_count += 1
-                                print("[+] -\n")
-                        except Exception as es: pass
+                    def checkpoint_3():
+                        # We check first if the numper of all others responses
+                        if len(selected["result_list"][choice2-1]["responses"]) > 0:
+                            getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
 
-                    entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ? (Y/N) :" + bcolors.ENDC)).lower()
-                    try:
-                        if entire_content == "y":
-                            print("[+] > Content :")
-                            print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
-                            print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
-                            print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
-                    except Exception as es: pass
+                            try:
+                                if getall == "y":
+                                    print("[+] > Others responses :")
+                                    print("\n[+] -")
+                                    respp_count = 1
+                                    for respp in selected["result_list"][choice2-1]["responses"]:
+                                        print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
+                                        print(bcolors.BOLD + "[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
+                                        print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
+                                        print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
+                                        respp_count += 1
+                                    print("[+] -\n")
+                                elif getall == "0":
+                                    checkpoint_2(ch)
+                            except Exception as es: 
+                                print(es)
+                                checkpoint_3()
+                        else:
+                            print(bcolors.FAIL + "[+] Any responses for this question." + bcolors.ENDC)
+
+                        entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ?  [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
+                        try:
+                            if entire_content == "y":
+                                print("[+] > Content :")
+                                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
+                                print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
+                                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
+                            elif entire_content == "0":
+                                checkpoint_2(ch)
+                        except Exception as es:
+                            print(es)
+                            checkpoint_3()
+
+                    checkpoint_3()
 
                     print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
                     print(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
@@ -142,7 +156,6 @@ class Zeus:
             checkpoint_2(choice)
 
         except Exception as es: print(es)
-
 
     def buildResultList(self, elt, link, tree, JSONObj, i):
         """[This method have the role on building the result_list]
@@ -208,12 +221,10 @@ class Zeus:
     def wainting(self):
         print(self.checking_message_method(), end="")
 
-
     def replaceSPECIALCARACTER(self, __string):
         special_caracter = ["'", '"', "@"]
         for sp in special_caracter:
             __string.replace(sp, "")
-
         return __string
 
     # ? go method
