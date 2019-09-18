@@ -106,7 +106,7 @@ class Zeus:
 
                     # We check first if the numper of all others responses
                     if len(selected["result_list"][choice2-1]["responses"]) > 0:
-                        getall = str(input(bcolors.WARNING + "[+] Do you want to get all responses ? (Y/N) :" + bcolors.ENDC)).lower()
+                        getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? (Y/N) :" + bcolors.ENDC)).lower()
                         try:
                             if getall == "y":
                                 print("[+] > Others responses :")
@@ -125,7 +125,6 @@ class Zeus:
                     try:
                         if entire_content == "y":
                             print("[+] > Content :")
-                            print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
                             print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
                             print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
                             print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||")
@@ -209,6 +208,14 @@ class Zeus:
     def wainting(self):
         print(self.checking_message_method(), end="")
 
+
+    def replaceSPECIALCARACTER(self, __string):
+        special_caracter = ["'", '"', "@"]
+        for sp in special_caracter:
+            __string.replace(sp, "")
+
+        return __string
+
     # ? go method
     # ! The Main method that take the eror and proceed
     def go(self, error):
@@ -252,7 +259,8 @@ class Zeus:
                     JSONObj = JSONArray[int(selected_choice[o])-1]
 
                     self.wainting()
-                    search_link = JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement']).replace('"', '').replace("'", ""))
+                    # Removing special characters
+                    search_link = self.replaceSPECIALCARACTER(JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement'])))
 
                     r = requests.get(search_link)
                     if r.status_code == 200:
