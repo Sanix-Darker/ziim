@@ -51,46 +51,6 @@ class Zeus:
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
 
 
-    def checkpoint_3(self, selected, solutions, choice2, ch):
-        # We check first if the numper of all others responses
-        if len(selected["result_list"][choice2-1]["responses"]) > 0:
-            getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
-
-            try:
-                if getall == "y":
-                    print("[+] > Others responses :")
-                    print("\n[+] -")
-                    respp_count = 1
-                    for respp in selected["result_list"][choice2-1]["responses"]:
-                        print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                        print(bcolors.BOLD + "[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
-                        print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                        print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
-                        respp_count += 1
-                    print("[+] -\n")
-                elif getall == "0":
-                    self.checkpoint_2(solutions, ch)
-            except Exception as es:
-                print(es)
-                self.checkpoint_3(selected, solutions, choice2, ch)
-        else:
-            print(bcolors.FAIL + "[+] Any responses for this question." + bcolors.ENDC)
-
-        entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ?  [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
-        try:
-            if entire_content == "y":
-                print("[+] > Content :")
-                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
-                print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
-                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
-            elif entire_content == "0":
-                self.checkpoint_2(solutions, ch)
-        except Exception as es:
-            print(es)
-            self.checkpoint_3(selected, solutions, choice2, ch)
-
-
-
 
     def checkpoint_2(self, solutions, ch):
         selected = solutions[ch-1]
@@ -134,6 +94,45 @@ class Zeus:
 
 
 
+    def checkpoint_3(self, selected, solutions, choice2, ch):
+        # We check first if the numper of all others responses
+        if len(selected["result_list"][choice2-1]["responses"]) > 0:
+            getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
+
+            try:
+                if getall == "y":
+                    print("[+] > Others responses :")
+                    print("\n[+] -")
+                    respp_count = 1
+                    for respp in selected["result_list"][choice2-1]["responses"]:
+                        print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
+                        print(bcolors.BOLD + "[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
+                        print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
+                        print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
+                        respp_count += 1
+                    print("[+] -\n")
+                elif getall == "0":
+                    self.checkpoint_2(solutions, ch)
+            except Exception as es:
+                print(es)
+                self.checkpoint_3(selected, solutions, choice2, ch)
+        else:
+            print(bcolors.FAIL + "[+] Any responses for this question." + bcolors.ENDC)
+
+        entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ?  [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
+        try:
+            if entire_content == "y":
+                print("[+] > Content :")
+                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
+                print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
+                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
+            elif entire_content == "0":
+                self.checkpoint_2(solutions, ch)
+        except Exception as es:
+            print(es)
+            self.checkpoint_3(selected, solutions, choice2, ch)
+
+
 
     def printResult(self, solutions):
         """
@@ -152,6 +151,7 @@ class Zeus:
         print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
         print("[+] ------------------------")
         choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+        
         if choice == 0: exit()
         if choice == 88:
             self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
@@ -261,7 +261,7 @@ class Zeus:
             MAX_RESPONSES_PER_LINK += self.search_level
 
             self.error = str(error).split("\n")[-1]
-            print("[+] The Error is ::: "+self.error+":::")
+            print("[+] The Error is "+bcolors.FAIL+":::"+self.error+":::"+bcolors.ENDC)
             with open(LIST_JSON_PATH, "r") as file_:
                 JSONArray = json.loads(file_.read())
                 solutions = []

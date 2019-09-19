@@ -42,8 +42,6 @@ For Now, Zeus can find on:
 - *[Done]* Codeproject
 - *[Done]* CodeRanch
 - *[Done]* SitePoint
-- *[Not yet]* Codeguru
-- *[Not yet]* ProgrammersHeaven
 - *[Not yet]* Quora
 - *[Not yet]* Designertalk
 - *[Not yet]* Hashnode
