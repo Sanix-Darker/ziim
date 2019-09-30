@@ -151,7 +151,7 @@ class Zeus:
         print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
         print("[+] ------------------------")
         choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
-        
+
         if choice == 0: exit()
         if choice == 88:
             self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
@@ -163,9 +163,7 @@ class Zeus:
         except Exception as es: print(es)
 
 
-
-
-
+    # This method will generate a map of responses per links
     def buildResultList(self, elt, link, tree, JSONObj, i):
         """[This method have the role on building the result_list]
             Arguments:
@@ -230,12 +228,12 @@ class Zeus:
         return self.checking_message
 
 
-
+    # This method have the only role on printing point to wait
     def wainting(self):
         print(self.checking_message_method(), end="")
 
 
-
+    # Remove spcial character form the error text search
     def replaceSPECIALCARACTER(self, __string):
         return __string.replace("'", "").replace('"', '').replace('@', '')
 

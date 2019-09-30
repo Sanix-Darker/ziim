@@ -2,3 +2,4 @@
 __pycache__
 ressources_check
 *node_modules
+.history
