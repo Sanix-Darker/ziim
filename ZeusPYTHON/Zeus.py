@@ -20,9 +20,6 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-# print bcolors.WARNING + "Warning: No active frommets remain. Continue?"
-#       + bcolors.ENDC
-
 class Zeus:
 
     def __init__(self, _type = "Python", search_level = 0):
@@ -37,11 +34,18 @@ class Zeus:
         self.checking_message = "\r[+] Checking available solution(s) online"
 
     def urlEncode(self, __string):
+        """[This method just encode a string to URL-format]
+
+        Arguments:
+            __string {[type]} -- [description]
+
+        Returns:
+            [type] -- [description]
+        """
         return urllib.parse.quote(__string)
 
     def presentation(self):
-        """
-        A simple function for the header of Zeus
+        """[A simple function for the header of Zeus]
         """
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
@@ -51,8 +55,13 @@ class Zeus:
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
 
 
-
     def checkpoint_2(self, solutions, ch):
+        """[summary]
+
+        Arguments:
+            solutions {[type]} -- [description]
+            ch {[type]} -- [description]
+        """
         selected = solutions[ch-1]
         print("\n\n[+] -----------------")
         print(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
@@ -95,6 +104,14 @@ class Zeus:
 
 
     def checkpoint_3(self, selected, solutions, choice2, ch):
+        """[summary]
+
+        Arguments:
+            selected {[type]} -- [description]
+            solutions {[type]} -- [description]
+            choice2 {[type]} -- [description]
+            ch {[type]} -- [description]
+        """
         # We check first if the numper of all others responses
         if len(selected["result_list"][choice2-1]["responses"]) > 0:
             getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
@@ -135,12 +152,12 @@ class Zeus:
 
 
     def printResult(self, solutions):
-        """
-        A function that return the result of solutions around the web
+        """[A function that return the result of solutions around the web]
 
-        Keyword Arguments:
-            solutions {list} -- [The list of solutions fetched] (default: {""})
+        Arguments:
+            solutions {[list]} -- [The list of solutions fetched]
         """
+
         choice = 0
         print("\n\n[+] -----------------")
         count_sol = 1
@@ -242,15 +259,16 @@ class Zeus:
     # ? go method
     # ! The Main method that take the eror and proceed
     def go(self, error):
+        """
+        A function that return the result of solutions around the web
+
+        Keyword Arguments:
+            error {str} -- [The error message] (default: {""})
+        """
         try:
             global MAX_RESULT
             global MAX_RESPONSES_PER_LINK
-            """
-            A function that return the result of solutions around the web
 
-            Keyword Arguments:
-                error {str} -- [The error message] (default: {""})
-            """
             if self.presentation_shows == False:
                 self.presentation()
                 self.presentation_shows = True

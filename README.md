@@ -28,7 +28,7 @@ No need to:
 
 ## Available versions of Zeus
 
-For now Zeus can be use on :
+For now Zeus is wrote in :
 
 - *[Stable]* Python
 - *[On going]* Javascript
