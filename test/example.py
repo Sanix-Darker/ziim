@@ -1,4 +1,4 @@
-import Zeus as Zeus
+import src.Zeus as Zeus
 zeus = Zeus.Zeus(search_level = 1)
 
 try:

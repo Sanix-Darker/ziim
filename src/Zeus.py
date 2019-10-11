@@ -150,7 +150,6 @@ class Zeus:
             self.checkpoint_3(selected, solutions, choice2, ch)
 
 
-
     def printResult(self, solutions):
         """[A function that return the result of solutions around the web]
 
