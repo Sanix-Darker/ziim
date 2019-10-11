@@ -55,19 +55,19 @@ class Zeus:
         selected = solutions[ch-1]
         print("\n\n[+] -----------------")
         print(bcolors.HEADER + "[+] On "+selected["title"]+"\n" + bcolors.ENDC)
-        count_selected = 1
-        for select in selected["result_list"]:
-            print(bcolors.BOLD + "[+] "+str(count_selected)+"-) "+str(select["title"])+" ("+str(select["answers"])+" answers, "+str(select["votes"])+" votes)" + bcolors.ENDC)
-            count_selected += 1
+        for (count_selected, select) in enumerate(selected["result_list"]):
+            print(bcolors.BOLD + "[+] "+str(count_selected+1)+"-) "+str(select["title"])+" ("+str(select["answers"])+" answers, "+str(select["votes"])+" votes)" + bcolors.ENDC)
         print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
+        print(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
         print("[+] ------------------------")
         choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
 
         try:
+            if(choice2 == 99): exit()
             if(choice2 == 0): self.printResult(solutions)
 
             print("\n\n[+] -----------------")
-            print(bcolors.HEADER + "[+] On "+selected["title"] + bcolors.ENDC)
+            print(bcolors.HEADER + "[+] > Forum : "+selected["title"] + bcolors.ENDC)
             print("[+] > Title : '"+selected["result_list"][choice2-1]["title"]+"'")
             print("[+] > Link : '"+selected["result_list"][choice2-1]["link"]+"'")
 
@@ -107,13 +107,11 @@ class Zeus:
                 if("y" in getall):
                     print("[+] > Others responses :")
                     print("\n[+] -")
-                    respp_count = 1
-                    for respp in selected["result_list"][choice2-1]["responses"]:
+                    for (respp_count, respp) in enumerate(selected["result_list"][choice2-1]["responses"]):
                         print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
-                        print(bcolors.BOLD + "[+] "+str(respp_count)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
+                        print(bcolors.BOLD + "[+] "+str(respp_count+1)+"-) "+str(respp["votes"])+"Votes" + bcolors.ENDC)
                         print("[+] ```````````````````````````````````````````````````````````````````````````````````````")
                         print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
-                        respp_count += 1
                     print("[+] -\n")
                 elif ("0" in getall):
                     self.choose_from_answer(solutions, ch)
@@ -144,15 +142,17 @@ class Zeus:
             solutions {[list]} -- [The list of solutions fetched]
         """
         choice = 0
-        print("\n\n[+] -----------------")
-        count_sol = 1
-        for sol in solutions:
-            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+")" + bcolors.ENDC)
-            count_sol += 1
-        # print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
-        print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
-        print("[+] ------------------------")
-        choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+        # We check if it's only one solution no need this step on listing just one solution
+        if (len(solutions) > 1):
+            print("\n\n[+] -----------------")
+            for (count_sol, sol) in enumerate(solutions):
+                print(bcolors.BOLD + "[+] "+str(count_sol+1)+"-) "+sol["title"]+" ("+str(sol["all_count"])+")" + bcolors.ENDC)
+            # print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
+            print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
+            print("[+] ------------------------")
+            choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
+        else:
+            choice = 1
 
         if choice == 0: exit()
         # if choice == 88:
@@ -208,15 +208,13 @@ class Zeus:
 
         # Getting the list of all response
         responses_content = []
-        responses_count = 0
-        for rep in tree2.xpath(JSONObj['responses']):
+        for (responses_count, rep) in enumerate(tree2.xpath(JSONObj['responses'])):
             # On recuperes uniquement des elements qui ne sont pas de la reponse
             if ''.join(rep.xpath('.//text()')) != to_append["solve_response"] :
                 votes_per_response = 0
                 try: votes_per_response = int(tree2.xpath(JSONObj['responses_vote'])[responses_count])
                 except Exception as es: pass
                 responses_content.append( { "votes": votes_per_response, "content":''.join(rep.xpath('.//text()'))})
-            responses_count += 1
             # if responses_count == MAX_RESPONSES_PER_LINK: break
         # Adding in the to_append
         to_append["responses"] = responses_content
@@ -246,8 +244,7 @@ class Zeus:
             tree = html.fromstring(r.content)
             titles = tree.xpath(JSONObj['each']['title'])
             result_list = []
-            i = 0
-            for elt in titles:
+            for (i, elt) in enumerate(titles):
                 self.wainting()
                 link = tree.xpath(JSONObj['each']['link'])[i]
 
@@ -262,10 +259,9 @@ class Zeus:
                 except Exception as es:
                     print(es)
                     self.go(self.error)
-                i += 1
                 # if i == MAX_RESULT: break
 
-            return True, result_list, titles, i
+            return True, result_list, titles, len(titles)-1
         else:
             return False, [], [], 0
 
@@ -297,10 +293,8 @@ class Zeus:
                 solutions = []
                 self.checking_message = "\r[+] Checking available solution(s) online"
                 print("[+] Where do you want to find solutions: ")
-                solution_count = 1
-                for JSONObj in JSONArray:
-                    print(bcolors.BOLD + "[+] "+str(solution_count)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
-                    solution_count += 1
+                for (solution_count, JSONObj) in enumerate(JSONArray):
+                    print(bcolors.BOLD + "[+] "+str(solution_count+1)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
 
                 thechoice = "1"
                 try:
@@ -319,7 +313,6 @@ class Zeus:
                     search_link = self.replaceSPECIALCARACTER(JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement'])))
 
                     resultlist_fetched = self.fetch_results_per_link(search_link, JSONObj)
-
                     titles = resultlist_fetched[2]
                     self.wainting()
                     result_count = len(titles)
@@ -330,7 +323,6 @@ class Zeus:
                         "all_count": all_count,
                         "result_list": resultlist_fetched[1]
                     })
-
                 self.printResult( solutions )
         except Exception as es:
             print("\n[+] ERROR on ZEUS, something bad happens with the selected option, check the error below:")

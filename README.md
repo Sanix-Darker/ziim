@@ -62,7 +62,7 @@ In the code :
 ```python
 # You import first Zeus Class and instantiate it
 import Zeus as Zeus
-zeus = Zeus.Zeus(search_level = 10) # search_level is not required and as default it's 0
+zeus = Zeus.Zeus() # search_level is not required and as default it's 0
 
 try:
     # Your code here
@@ -75,8 +75,7 @@ except Exception as es:
 
 Run in the cli :
 ```shell
-cd ZeusPYTHON
-
+cd ./test
 python example.py
 ```
 
