@@ -101,7 +101,7 @@ class Zeus:
         """
         # We check first if the numper of all others responses
         if len(selected["result_list"][choice2-1]["responses"]) > 0:
-            getall = str(input(bcolors.WARNING + "[+] Get all other responses ? [ Y / N / 0(To go back) ] :" + bcolors.ENDC)).lower()
+            getall = str(input(bcolors.WARNING + "[+] Get all other responses("+str(len(selected["result_list"][choice2-1]["responses"]))+") ? [ Y / N / 0(To go back) ] :" + bcolors.ENDC)).lower()
 
             try:
                 if("y" in getall):
