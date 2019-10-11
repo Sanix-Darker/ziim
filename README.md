@@ -26,13 +26,6 @@ No need to:
 - `Open multiple tabs per result`,
 - `fetching where the solution of your problem could be`...
 
-## Available versions of Zeus
-
-For now Zeus is wrote in :
-
-- *[Stable]* Python
-- *[On going]* Javascript
-
 ## Handled Forums
 
 For Now, Zeus can find on:
@@ -85,41 +78,6 @@ Run in the cli :
 cd ZeusPYTHON
 
 python example.py
-```
-
-### In JS:
-
-Make sure you have installed all requirements in ./python/requirements.txt, by running :
-```shell
-cd ZeusJS
-
-yarn install
-# or npm install
-```
-
-In the code :
-
-```javascript
-// You import first Zeus Class and instantiate it
-import Zeus from './Zeus';
-let Zeus = new Zeus(1);
-
-try{
-    // Put your source code herer
-    const test = "Exemple"+24 // Let's generate our error here
-}catch(err){
-    console.log(err)
-    // Now call Zeus
-    Zeus.go(err)
-    // That's all
-}
-```
-
-Run in the cli :
-```shell
-cd ZeusJS
-
-node example.js
 ```
 
 ## DEMO
