@@ -55,7 +55,7 @@ class Zeus:
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
 
 
-    def checkpoint_2(self, solutions, ch):
+    def choose_from_answer(self, solutions, ch):
         """[summary]
 
         Arguments:
@@ -91,19 +91,18 @@ class Zeus:
             else:
                 print(bcolors.FAIL + "[+] { Any Solution was approve for this question }" + bcolors.ENDC)
 
-            self.checkpoint_3(selected, solutions, choice2, ch)
+            self.responses_entireQuestion(selected, solutions, choice2, ch)
 
             print(bcolors.FAIL + "[+] 0-) To Back" + bcolors.ENDC)
             print(bcolors.FAIL + "[+] 99-) To Exit" + bcolors.ENDC)
             print("[+] ------------------------")
             choice2 = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
             if choice2 == 99: exit()
-            if choice2 == 0: self.checkpoint_2(solutions, ch)
+            if choice2 == 0: self.choose_from_answer(solutions, ch)
         except Exception as es: print(es)
 
 
-
-    def checkpoint_3(self, selected, solutions, choice2, ch):
+    def responses_entireQuestion(self, selected, solutions, choice2, ch):
         """[summary]
 
         Arguments:
@@ -114,10 +113,10 @@ class Zeus:
         """
         # We check first if the numper of all others responses
         if len(selected["result_list"][choice2-1]["responses"]) > 0:
-            getall = str(input(bcolors.WARNING + "[+] Do you want to get all other responses ? [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
+            getall = str(input(bcolors.WARNING + "[+] Get all other responses ? [ Y / N / 0(To go back) ] :" + bcolors.ENDC)).lower()
 
             try:
-                if getall == "y":
+                if("y" in getall):
                     print("[+] > Others responses :")
                     print("\n[+] -")
                     respp_count = 1
@@ -128,26 +127,26 @@ class Zeus:
                         print("[+] "+respp["content"].replace("\n", "\n[+] \t"))
                         respp_count += 1
                     print("[+] -\n")
-                elif getall == "0":
-                    self.checkpoint_2(solutions, ch)
+                elif ("0" in getall):
+                    self.choose_from_answer(solutions, ch)
             except Exception as es:
                 print(es)
-                self.checkpoint_3(selected, solutions, choice2, ch)
+                self.responses_entireQuestion(selected, solutions, choice2, ch)
         else:
             print(bcolors.FAIL + "[+] Any responses for this question." + bcolors.ENDC)
 
-        entire_content = str(input(bcolors.WARNING + "[+] Do you want to see the entire question ?  [ Y (Yes) / N (No) / 0 (To go back) ] :" + bcolors.ENDC)).lower()
+        entire_content = str(input(bcolors.WARNING + "[+] Get the entire question ?  [ Y / N / 0(To go back) ] :" + bcolors.ENDC)).lower()
         try:
-            if entire_content == "y":
+            if("y" in entire_content):
                 print("[+] > Content :")
                 print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
                 print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
                 print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
-            elif entire_content == "0":
-                self.checkpoint_2(solutions, ch)
+            elif("0" in entire_content):
+                self.choose_from_answer(solutions, ch)
         except Exception as es:
             print(es)
-            self.checkpoint_3(selected, solutions, choice2, ch)
+            self.responses_entireQuestion(selected, solutions, choice2, ch)
 
 
     def printResult(self, solutions):
@@ -156,7 +155,6 @@ class Zeus:
         Arguments:
             solutions {[list]} -- [The list of solutions fetched]
         """
-
         choice = 0
         print("\n\n[+] -----------------")
         count_sol = 1
@@ -175,7 +173,7 @@ class Zeus:
 
         try:
             # if the choice is 0 then the checkpoint 2 will loop
-            self.checkpoint_2(solutions, choice)
+            self.choose_from_answer(solutions, choice)
         except Exception as es: print(es)
 
 
@@ -237,7 +235,6 @@ class Zeus:
         return to_append
 
 
-
     # This method will only print the waiting message
     def checking_message_method(self):
         self.checking_message += "."
@@ -252,7 +249,6 @@ class Zeus:
     # Remove spcial character form the error text search
     def replaceSPECIALCARACTER(self, __string):
         return __string.replace("'", "").replace('"', '').replace('@', '')
-
 
 
     # ? go method
