@@ -4,11 +4,12 @@ from lxml import html
 import requests
 from sys import exit
 
-import urllib.parse
-
+# The list of available webSite where to take solution
 LIST_JSON_PATH = "../list.json"
-MAX_RESULT = 2
-MAX_RESPONSES_PER_LINK = 3
+
+
+# MAX_RESULT = 2
+# MAX_RESPONSES_PER_LINK = 3
 
 class bcolors:
     HEADER = '\033[95m' # rose
@@ -22,27 +23,16 @@ class bcolors:
 
 class Zeus:
 
-    def __init__(self, _type = "Python", search_level = 0):
+    def __init__(self, _type = "Python"): # search_level = 0
         """
         Keyword Arguments:
-            search_level {int} -- [The level of searching results going from 0 to 5] (default: {0})
+            [REMOVED] search_level {int} -- [The level of searching results going from 0 to 5] (default: {0})
         """
         self.error = ""
         self.presentation_shows = False
         self._type = _type
-        self.search_level = search_level
+        # self.search_level = search_level
         self.checking_message = "\r[+] Checking available solution(s) online"
-
-    def urlEncode(self, __string):
-        """[This method just encode a string to URL-format]
-
-        Arguments:
-            __string {[type]} -- [description]
-
-        Returns:
-            [type] -- [description]
-        """
-        return urllib.parse.quote(__string)
 
     def presentation(self):
         """[A simple function for the header of Zeus]
@@ -83,11 +73,9 @@ class Zeus:
 
             if len(selected["result_list"][choice2-1]["solve_response"]) > 4:
                 print(bcolors.OKGREEN + "[+] > Solution : ")
-                print("[+] ===================================================================================================")
                 print("[+] ---------------------------------------------------------------------------------------------------")
                 print(selected["result_list"][choice2-1]["solve_response"].replace("\n", "\n[+] \t"))
-                print("[+] ---------------------------------------------------------------------------------------------------")
-                print("[+] ===================================================================================================" + bcolors.ENDC)
+                print("[+] ---------------------------------------------------------------------------------------------------" + bcolors.ENDC)
             else:
                 print(bcolors.FAIL + "[+] { Any Solution was approve for this question }" + bcolors.ENDC)
 
@@ -133,7 +121,7 @@ class Zeus:
                 print(es)
                 self.responses_entireQuestion(selected, solutions, choice2, ch)
         else:
-            print(bcolors.FAIL + "[+] Any responses for this question." + bcolors.ENDC)
+            print(bcolors.FAIL + "[+] Any other responses for this question." + bcolors.ENDC)
 
         entire_content = str(input(bcolors.WARNING + "[+] Get the entire question ?  [ Y / N / 0(To go back) ] :" + bcolors.ENDC)).lower()
         try:
@@ -159,17 +147,17 @@ class Zeus:
         print("\n\n[+] -----------------")
         count_sol = 1
         for sol in solutions:
-            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+" / "+str(sol["result_count"])+")" + bcolors.ENDC)
+            print(bcolors.BOLD + "[+] "+str(count_sol)+"-) "+sol["title"]+" ("+str(sol["all_count"])+")" + bcolors.ENDC)
             count_sol += 1
-        print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
+        # print(bcolors.BOLD + "[+] 88-) ["+str(self.search_level)+"] Change the search level(0-10)" + bcolors.ENDC)
         print(bcolors.FAIL + "[+] 0-) To stop" + bcolors.ENDC)
         print("[+] ------------------------")
         choice = int(input(bcolors.WARNING + "[+] Choose available options: " + bcolors.ENDC))
 
         if choice == 0: exit()
-        if choice == 88:
-            self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
-            self.go(self.error)
+        # if choice == 88:
+        #     self.search_level = int(input(bcolors.WARNING + "[+] Choose the search level: " + bcolors.ENDC))
+        #     self.go(self.error)
 
         try:
             # if the choice is 0 then the checkpoint 2 will loop
@@ -229,7 +217,7 @@ class Zeus:
                 except Exception as es: pass
                 responses_content.append( { "votes": votes_per_response, "content":''.join(rep.xpath('.//text()'))})
             responses_count += 1
-            if responses_count == MAX_RESPONSES_PER_LINK: break
+            # if responses_count == MAX_RESPONSES_PER_LINK: break
         # Adding in the to_append
         to_append["responses"] = responses_content
         return to_append
@@ -251,6 +239,37 @@ class Zeus:
         return __string.replace("'", "").replace('"', '').replace('@', '')
 
 
+    def fetch_results_per_link(self, search_link, JSONObj):
+        r = requests.get(search_link)
+        if r.status_code == 200:
+            self.wainting()
+            tree = html.fromstring(r.content)
+            titles = tree.xpath(JSONObj['each']['title'])
+            result_list = []
+            i = 0
+            for elt in titles:
+                self.wainting()
+                link = tree.xpath(JSONObj['each']['link'])[i]
+
+                if "http" not in link:
+                    if JSONObj["link"] not in link and "www" not in link:
+                        link = JSONObj["link"] + link
+                    else:
+                        link = "http://"+link.split("//")[1]
+
+                try:
+                    result_list.append(self.buildResultList(elt, link, tree, JSONObj, i))
+                except Exception as es:
+                    print(es)
+                    self.go(self.error)
+                i += 1
+                # if i == MAX_RESULT: break
+
+            return True, result_list, titles, i
+        else:
+            return False, [], [], 0
+
+
     # ? go method
     # ! The Main method that take the eror and proceed
     def go(self, error):
@@ -261,15 +280,15 @@ class Zeus:
             error {str} -- [The error message] (default: {""})
         """
         try:
-            global MAX_RESULT
-            global MAX_RESPONSES_PER_LINK
+            # global MAX_RESULT
+            # global MAX_RESPONSES_PER_LINK
 
             if self.presentation_shows == False:
                 self.presentation()
                 self.presentation_shows = True
 
-            MAX_RESULT += self.search_level
-            MAX_RESPONSES_PER_LINK += self.search_level
+            # MAX_RESULT += self.search_level
+            # MAX_RESPONSES_PER_LINK += self.search_level
 
             self.error = str(error).split("\n")[-1]
             print("[+] The Error is "+bcolors.FAIL+":::"+self.error+":::"+bcolors.ENDC)
@@ -285,7 +304,7 @@ class Zeus:
 
                 thechoice = "1"
                 try:
-                    thechoice = input(bcolors.WARNING + "[+] Choose ( Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow)): " + bcolors.ENDC)
+                    thechoice = input(bcolors.WARNING + "[+] (Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow))\n[+] Your Choice: " + bcolors.ENDC)
                     if thechoice == "": thechoice = "1"
                 except Exception as es: pass
 
@@ -299,41 +318,19 @@ class Zeus:
                     # Removing special characters
                     search_link = self.replaceSPECIALCARACTER(JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement'])))
 
-                    r = requests.get(search_link)
-                    if r.status_code == 200:
-                        self.wainting()
-                        tree = html.fromstring(r.content)
-                        titles = tree.xpath(JSONObj['each']['title'])
-                        result_list = []
-                        i = 0
-                        for elt in titles:
-                            self.wainting()
-                            link = tree.xpath(JSONObj['each']['link'])[i]
+                    resultlist_fetched = self.fetch_results_per_link(search_link, JSONObj)
 
-                            if "http" not in link:
-                                if JSONObj["link"] not in link and "www" not in link:
-                                    link = JSONObj["link"] + link
-                                else:
-                                    link = "http://"+link.split("//")[1]
+                    titles = resultlist_fetched[2]
+                    self.wainting()
+                    result_count = len(titles)
+                    all_count = resultlist_fetched[3]
+                    solutions.append( {
+                        "title": JSONObj['title'],
+                        "result_count": result_count,
+                        "all_count": all_count,
+                        "result_list": resultlist_fetched[1]
+                    })
 
-                            try:
-                                result_list.append(self.buildResultList(elt, link, tree, JSONObj, i))
-                            except Exception as es:
-                                print(es)
-                                self.go(self.error)
-
-                            i += 1
-                            if i == MAX_RESULT: break
-
-                        self.wainting()
-                        result_count = len(titles)
-                        all_count = i
-                        solutions.append( {
-                            "title": JSONObj['title'],
-                            "result_count": result_count,
-                            "all_count": all_count,
-                            "result_list": result_list
-                        })
                 self.printResult( solutions )
         except Exception as es:
             print("\n[+] ERROR on ZEUS, something bad happens with the selected option, check the error below:")
