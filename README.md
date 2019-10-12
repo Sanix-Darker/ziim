@@ -1,11 +1,13 @@
 
-<img src="./images/logo.png" />
-
 # Zeus
 
 Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
 Zeus will handle everything for you, directly in the CLI after catching an error!\
 **AMAZING RIGHT ?**
+
+## DEMO
+
+<img src="./images/demo.gif" />
 
 ## How it's works
 
@@ -49,7 +51,7 @@ You will have the available list in `./list.json`
 
 Let's see some examples on how to use it :
 
-### In Python:
+### In your code:
 
 Make sure you have installed all requirements in ./python/requirements.txt, by running :
 ```shell
@@ -79,9 +81,18 @@ cd ./test
 python example.py
 ```
 
-## DEMO
+## As a CLI
 
-<img src="./images/demo.gif" />
+Just hit this sample command : 
+```shell
+python ./cli/zeuscli.py node ./example.js
+```
+
+The command `node ./example.js` will be executed and the error will be taken to zeus, with this method you can start any kind of process in CLI and use zeuscli to fetch solutions.
+
+## ZeusCLI DEMO
+
+<img src="./images/zeuscli.gif" />
 
 ## Author
 

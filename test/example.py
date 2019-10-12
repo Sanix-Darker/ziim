@@ -1,7 +1,8 @@
 # Just to import Zeus
-import os,sys
+from os import path as ospath
+from sys import path as syspath
 # moving the path outside of the current dir
-sys.path.insert(1, os.path.join(sys.path[0], '..'))
+syspath.insert(1, ospath.join(syspath[0], '..'))
 import src.Zeus as Zeus
 # Just to import Zeus
 

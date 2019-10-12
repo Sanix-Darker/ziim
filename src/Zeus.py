@@ -5,7 +5,91 @@ import requests
 from sys import exit
 
 # The list of available webSite where to take solution
-LIST_JSON_PATH = "../list.json"
+#LIST_JSON_PATH = "./list.json"
+
+
+list_json = [
+    {
+        "title":"StackOverflow",
+        "link":"https://stackoverflow.com",
+        "search_link":"https://stackoverflow.com/search?q=[z]",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[@class='result-link']//h3//a/@title",
+            "link": "//div[@class='result-link']//h3//a/@href",
+            "content": "//div[contains(@class, 'summary')]//div[contains(@class, 'excerpt')]//text()",
+            "answers": "//div[@class='stats']//div[contains(@class, 'status')]//strong/text()",
+            "votes": "//div[@class='stats']//div[contains(@class, 'vote')]//div[contains(@class, 'votes')]//span[contains(@class, 'vote-count-post')]//strong/text()"
+        },
+        "responses":"//div[@id='answers']//div[contains(@class, 'answer')]//div[contains(@class, 'post-text')]",
+        "responses_vote":"//div[@id='answers']//div[contains(@class, 'votecell')]//div[contains(@class, 'vote-count')]/@data-value",
+        "solve_response":"//div[@id='answers']//div[contains(@class, 'accepted-answer')]//div[contains(@class, 'post-text')]"
+    },
+    {
+        "title":"StackExchange",
+        "link":"https://stackexchange.com",
+        "search_link":"https://stackexchange.com/search?q=[z]",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[@class='result-link']//span//a/text()",
+            "link": "//div[@class='result-link']//span//a/@href",
+            "content": "//div[contains(@class, 'summary')]//div[contains(@class, 'excerpt')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[@id='answers']//div[contains(@class, 'answer')]//div[contains(@class, 'post-text')]",
+        "responses_vote":"//div[@id='answers']//div[contains(@class, 'votecell')]//div[contains(@class, 'vote-count')]/@data-value",
+        "solve_response":"//div[@id='answers']//div[contains(@class, 'accepted-answer')]//div[contains(@class, 'post-text')]"
+    },
+    {
+        "title":"CodeProject",
+        "link":"https://www.codeproject.com",
+        "search_link":"https://www.codeproject.com/search.aspx?q=[z]&doctypeid=4",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[contains(@class, 'content-list-item')]//div[@class='entry']//span[@class='title']//a/text()",
+            "link": "//div[contains(@class, 'content-list-item')]//div[@class='entry']//span[@class='title']//a/@href",
+            "content": "//div[contains(@class, 'summary')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[@class='text']",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@itemprop='acceptedAnswer']"
+    },
+    {
+        "title":"CodeRanch",
+        "link":"https://coderanch.com",
+        "search_link":"https://coderanch.com/forums/search/search/-1?match_type=all&sort_by=time&groupByTopic=true&q=[z]",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[@class='topicinfoheader']//div[@class='subjectsection']//a[@class='subject']/text()",
+            "link": "//div[@class='topicinfoheader']//div[@class='subjectsection']//a[@class='subject']/@href",
+            "content": "//div[contains(@class, 'posts')]//td[contains(@class, 'row1')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[contains(@class, 'postText')]",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@class='nothing-yet']"
+    },
+    {
+        "title":"SitePoint [AJAX] not handle",
+        "link":"https://www.sitepoint.com",
+        "search_link":"https://www.sitepoint.com/community/search?q=[z]",
+        "space_replacement": "%20",
+        "each":{
+            "title": "//span[contains(@class, 'topic-title')]//span[@class='ember-view']/text()",
+            "link": "//a[contains(@class, 'search-link')]/@href",
+            "content": "//div[contains(@class, 'blurb')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[@class='text']",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@itemprop='acceptedAnswer']"
+    }
+]
 
 
 # MAX_RESULT = 2
@@ -125,9 +209,9 @@ class Zeus:
         try:
             if("y" in entire_content):
                 print("[+] > Content :")
-                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
+                print("[+] |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
                 print((selected["result_list"][choice2-1]["content"]).replace("\n", "\n[+] \t"))
-                print("[+] --------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------|||||||||||||||||||||||||--------------------------")
+                print("[+] |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
             elif("0" in entire_content):
                 self.choose_from_answer(solutions, ch)
         except Exception as es:
@@ -288,42 +372,42 @@ class Zeus:
 
             self.error = str(error).split("\n")[-1]
             print("[+] The Error is "+bcolors.FAIL+":::"+self.error+":::"+bcolors.ENDC)
-            with open(LIST_JSON_PATH, "r") as file_:
-                JSONArray = json.loads(file_.read())
-                solutions = []
-                self.checking_message = "\r[+] Checking available solution(s) online"
-                print("[+] Where do you want to find solutions: ")
-                for (solution_count, JSONObj) in enumerate(JSONArray):
-                    print(bcolors.BOLD + "[+] "+str(solution_count+1)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
+            # with open(LIST_JSON_PATH, "r") as file_:
+            JSONArray = list_json
+            solutions = []
+            self.checking_message = "\r[+] Checking available solution(s) online"
+            print("[+] Where do you want to find solutions: ")
+            for (solution_count, JSONObj) in enumerate(JSONArray):
+                print(bcolors.BOLD + "[+] "+str(solution_count+1)+"-) "+str(JSONObj["title"])+ bcolors.ENDC)
 
-                thechoice = "1"
-                try:
-                    thechoice = input(bcolors.WARNING + "[+] (Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow))\n[+] Your Choice: " + bcolors.ENDC)
-                    if thechoice == "": thechoice = "1"
-                except Exception as es: pass
+            thechoice = "1"
+            try:
+                thechoice = input(bcolors.WARNING + "[+] (Ex: 1 or Ex: 1,2,3 or press ENTER (Default is stackOverFlow))\n[+] Your Choice: " + bcolors.ENDC)
+                if thechoice == "": thechoice = "1"
+            except Exception as es: pass
 
-                selected_choice = thechoice.split(",")
+            selected_choice = thechoice.split(",")
+
+            self.wainting()
+            for o in range(0, len(selected_choice)):
+                JSONObj = JSONArray[int(selected_choice[o])-1]
 
                 self.wainting()
-                for o in range(0, len(selected_choice)):
-                    JSONObj = JSONArray[int(selected_choice[o])-1]
+                # Removing special characters
+                search_link = self.replaceSPECIALCARACTER(JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement'])))
 
-                    self.wainting()
-                    # Removing special characters
-                    search_link = self.replaceSPECIALCARACTER(JSONObj['search_link'].replace("[z]", self.error.replace(" ", JSONObj['space_replacement'])))
-
-                    resultlist_fetched = self.fetch_results_per_link(search_link, JSONObj)
-                    titles = resultlist_fetched[2]
-                    self.wainting()
-                    result_count = len(titles)
-                    all_count = resultlist_fetched[3]
-                    solutions.append( {
-                        "title": JSONObj['title'],
-                        "result_count": result_count,
-                        "all_count": all_count,
-                        "result_list": resultlist_fetched[1]
-                    })
-                self.printResult( solutions )
+                resultlist_fetched = self.fetch_results_per_link(search_link, JSONObj)
+                titles = resultlist_fetched[2]
+                self.wainting()
+                result_count = len(titles)
+                all_count = resultlist_fetched[3]
+                solutions.append( {
+                    "title": JSONObj['title'],
+                    "result_count": result_count,
+                    "all_count": all_count,
+                    "result_list": resultlist_fetched[1]
+                })
+            self.printResult( solutions )
         except Exception as es:
             print("\n[+] ERROR on ZEUS, something bad happens with the selected option, check the error below:")
             print(es)
