@@ -1,4 +1,4 @@
-[
+data = [
     {
         "title":"StackOverflow",
         "link":"https://stackoverflow.com",
