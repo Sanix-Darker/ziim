@@ -4,7 +4,7 @@ from lxml import html
 import requests
 from sys import exit
 from src.list_json import data
-from src.bcolors import bcolors
+from src.Bcolors import Bcolors as bcolors
 
 list_json = data
 
@@ -224,10 +224,27 @@ class Zeus:
 
     # Remove spcial character form the error text search
     def replaceSPECIALCARACTER(self, __string):
+        """[summary]
+
+        Arguments:
+            __string {[type]} -- [description]
+
+        Returns:
+            [type] -- [description]
+        """
         return __string.replace("'", "").replace('"', '').replace('@', '')
 
 
     def fetch_results_per_link(self, search_link, JSONObj):
+        """[summary]
+
+        Arguments:
+            search_link {[type]} -- [description]
+            JSONObj {[type]} -- [description]
+
+        Returns:
+            [type] -- [description]
+        """
         r = requests.get(search_link)
         if r.status_code == 200:
             self.wainting()
