@@ -24,6 +24,8 @@ class Zeus:
         # self.search_level = search_level
         self.checking_message = "\r[+] Checking available solution(s) online"
 
+
+
     def presentation(self):
         """[A simple function for the header of Zeus]
         """
@@ -35,8 +37,11 @@ class Zeus:
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
 
 
+
     def choose_from_answer(self, solutions, ch):
-        """[summary]
+        """[This method takes solutions as JSON element and present their
+            titles as option, when you choose, you have the solution
+            per title and other responses]
 
         Arguments:
             solutions {[type]} -- [description]
@@ -81,7 +86,8 @@ class Zeus:
 
 
     def responses_entireQuestion(self, selected, solutions, choice2, ch):
-        """[summary]
+        """[This method proposes if the user want all responses then
+            ask if he want to see the whole body of the question]
 
         Arguments:
             selected {[type]} -- [description]
@@ -236,7 +242,8 @@ class Zeus:
 
 
     def fetch_results_per_link(self, search_link, JSONObj):
-        """[summary]
+        """[Per link given, this method will fetchs responses, the whole questions,
+            and the solution]
 
         Arguments:
             search_link {[type]} -- [description]
