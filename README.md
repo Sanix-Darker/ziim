@@ -38,25 +38,28 @@ For Now, Zeus can find on:
 - *[Done]* Codeproject
 - *[Done]* CodeRanch
 - *[Done]* SitePoint
-- *[Not yet]* Quora
-- *[Not yet]* Designertalk
-- *[Not yet]* Hashnode
-- *[Not yet]* Codecall
-- *[Not yet]* Reddit
+- *[Done]* Quora
+- *[Done]* Reddit
 - *[Not yet]* Hackr
 - *[Not yet]* Webdeveloper
 
-You will have the available list in `./list.json`
+You will have the available list in `./src/list_json.py`
+
+## Requirements
+
+- Python (3.x is recommended)
+- requests
+- lxml
+
 
 ## How to use it
 
 Let's see some examples on how to use it :
 
-### In your code:
+### In your code
 
 Make sure you have installed all requirements in ./python/requirements.txt, by running :
 ```shell
-cd ZeusPYTHON
 pip install -r requirements.txt
 ```
 

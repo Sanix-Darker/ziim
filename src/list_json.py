@@ -64,6 +64,38 @@ data = [
         "solve_response":"//div[@class='nothing-yet']"
     },
     {
+        "title":"Reddit [language/topic]",
+        "link":"https://www.reddit.com",
+        "search_link":"https://www.reddit.com/r/[t]/search/?q=[z]&restrict_sr=1",
+        "space_replacement": "%20",
+        "each":{
+            "title": "//div[@class='SubredditVars-r-javascript']//h3//text()",
+            "link": "//div[@class='topicinfoheader']//div[@class='subjectsection']//a[@class='subject']/@href",
+            "content": "//div[contains(@class, 'posts')]//td[contains(@class, 'row1')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[contains(@class, 'postText')]",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@class='nothing-yet']"
+    },
+    {
+        "title":"Quora [AJAX] not handle",
+        "link":"https://www.quora.com",
+        "search_link":"https://www.quora.com/search?q=[z]",
+        "space_replacement": "+",
+        "each":{
+            "title": "//div[@class='QueryResults']//span[@class='ui_qtext_rendered_qtext']/text()",
+            "link": "//div[@class='QueryResults']//a[@class='question_link']/@href",
+            "content": "//div[@class='QueryResults']//div[contains(@class, 'truncated_q_text')]//text()",
+            "answers": "//div[@class='nothing-yet']/text()",
+            "votes": "//div[@class='nothing-yet']/text()"
+        },
+        "responses":"//div[contains(@class, 'postText')]",
+        "responses_vote":"//div[@class='nothing-yet']/text()",
+        "solve_response":"//div[@class='nothing-yet']"
+    },
+    {
         "title":"SitePoint [AJAX] not handle",
         "link":"https://www.sitepoint.com",
         "search_link":"https://www.sitepoint.com/community/search?q=[z]",

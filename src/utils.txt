@@ -1,7 +1,3 @@
-http://www.quora.com/
-http://www.designertalk.co/
-https://hashnode.com/
-http://forum.codecall.net/
 https://www.xda-developers.com/
 
 http://www.reddit.com/r/programming
