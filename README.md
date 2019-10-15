@@ -90,6 +90,11 @@ python example.py
 Just hit this sample command : 
 ```shell
 python ./cli/zeuscli.py node ./example.js
+# or add an alias:
+alias zeuscli = "python absolute/path/to/cli/zeuscli.py"
+
+# Then hit:
+zeuscli node ./example.js
 ```
 
 The command `node ./example.js` will be executed and the error will be taken to zeus, with this method you can start any kind of process in CLI and use zeuscli to fetch solutions.
