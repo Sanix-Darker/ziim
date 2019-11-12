@@ -1,1 +1,1 @@
-console.log("Test !"))
+console.log("Test !")) // An intentionnal error place here to active zeus, when trying to execute this script
