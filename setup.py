@@ -5,8 +5,8 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ziim",
-    version="0.0.9.1",
-    scripts=['./scripts/ziim.sh'],
+    version="0.0.9.2",
+    scripts=['./scripts/ziim'],
     author="Sanix-darker",
     author_email="s4nixd@gmail.com",
     description="Let your CLI find available solutions for errors/exceptions in your code for you, "
