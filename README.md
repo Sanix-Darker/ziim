@@ -73,7 +73,7 @@ except Exception as es:
 
 Run in the cli :
 ```shell
-python3 -m src.example
+python3 -m ziim.example
 ```
 
 ## As a CLI
@@ -81,7 +81,7 @@ python3 -m src.example
 Just hit this sample command : 
 ```shell
 # Then hit:
-zm node ./example.js
+ziim node ./example.js
 ```
 
 The command `node ./example.js` will be executed and the error will be taken to ziim, with this method you can start any kind of process in CLI and use ziimcli to fetch solutions.

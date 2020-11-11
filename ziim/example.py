@@ -1,5 +1,5 @@
 # Just to import Ziim
-from ziim.Ziim import Ziim
+from ziim.module import Ziim
 
 try:
     # Your code here

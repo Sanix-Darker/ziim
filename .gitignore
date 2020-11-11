@@ -8,3 +8,4 @@ ressources_check
 dist
 build
 MANIFEST
+*-info
