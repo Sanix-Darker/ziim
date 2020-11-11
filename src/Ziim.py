@@ -103,14 +103,15 @@ class Ziim:
 
 
     def responses_entireQuestion(self, selected, solutions, choice2, ch):
-        """[This method proposes if the user want all responses then
-            ask if he want to see the whole body of the question]
+        """
+        This method proposes if the user want all responses then
+            ask if he want to see the whole body of the question
 
         Arguments:
-            selected {[type]} -- [description]
-            solutions {[type]} -- [description]
-            choice2 {[type]} -- [description]
-            ch {[type]} -- [description]
+            selected
+            solutions
+            choice2
+            ch
         """
         # We check first if the numper of all others responses
         if len(selected["result_list"][choice2-1]["responses"]) > 0:
@@ -149,7 +150,8 @@ class Ziim:
 
 
     def printResult(self, solutions):
-        """[A function that return the result of solutions around the web]
+        """
+        A function that return the result of solutions around the web
 
         Arguments:
             solutions {[list]} -- [The list of solutions fetched]
@@ -180,14 +182,16 @@ class Ziim:
 
     # This method will generate a map of responses per links
     def buildResultList(self, elt, link, tree, JSONObj, i):
-        """[This method have the role on building the result_list]
-            Arguments:
-                elt {[type]} -- [element from the array of titles]
-                link {[str]} -- [The link]
-                content {[str]} -- [The content of the question]
-                tree {[xpath]} -- [description]
-                tree2 {[xpath]} -- [description]
-                JSONObj {[json]} -- [description]
+        """
+        This method have the role on building the result_list
+
+        Arguments:
+            elt {[type]} -- [element from the array of titles]
+            link {[str]} -- [The link]
+            content {[str]} -- [The content of the question]
+            tree
+            tree2
+            JSONObj
         """
         content = ""
         try: content = ''.join(tree.xpath(JSONObj['each']['content']))
@@ -206,18 +210,24 @@ class Ziim:
         }
         # Getting the solution
         to_append["solve_response"] = ""
-        try: to_append["solve_response"] = ''.join(tree2.xpath(JSONObj['solve_response'])[0].xpath('.//text()'))
-        except Exception as es: pass
+        try:
+            to_append["solve_response"] = ''.join(tree2.xpath(JSONObj['solve_response'])[0].xpath('.//text()'))
+        except Exception as es:
+            pass
 
         # Getting the number of answers
         to_append["answers"] = 0
-        try: to_append["answers"] = int(tree.xpath(JSONObj['each']['answers'])[i])
-        except Exception as es: pass
+        try:
+            to_append["answers"] = int(tree.xpath(JSONObj['each']['answers'])[i])
+        except Exception as es:
+            pass
 
         # Getting the number of votes
         to_append["votes"] = 0
-        try: to_append["votes"] = int(tree.xpath(JSONObj['each']['votes'])[i])
-        except Exception as es: pass
+        try:
+            to_append["votes"] = int(tree.xpath(JSONObj['each']['votes'])[i])
+        except Exception as es:
+            pass
 
         # Getting the list of all response
         responses_content = []
@@ -247,20 +257,19 @@ class Ziim:
 
     # Remove spcial character form the error text search
     def replaceSPECIALCARACTER(self, __string):
-        """[summary]
+        """
+        replace SPECIAL CARACTER
 
         Arguments:
-            __string {[type]} -- [description]
-
-        Returns:
-            [type] -- [description]
+            __string
         """
         return __string.replace("'", "").replace('"', '').replace('@', '')
 
 
     def fetch_results_per_link(self, search_link, JSONObj):
-        """[Per link given, this method will fetchs responses, the whole questions,
-            and the solution]
+        """
+        Per link given, this method will fetchs responses, the whole questions,
+            and the solution
 
         Arguments:
             search_link {[type]} -- [description]
