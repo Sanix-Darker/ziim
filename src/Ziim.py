@@ -56,13 +56,14 @@ class Ziim:
 
 
     def choose_from_answer(self, solutions, ch):
-        """[This method takes solutions as JSON element and present their
+        """
+        This method takes solutions as JSON element and present their
             titles as option, when you choose, you have the solution
-            per title and other responses]
+            per title and other responses
 
         Arguments:
-            solutions {[type]} -- [description]
-            ch {[type]} -- [description]
+            solutions
+            ch
         """
         selected = solutions[ch-1]
         print("\n\n[+] -----------------")
