@@ -1,5 +1,5 @@
 # Just to import Ziim
-from src.Ziim import Ziim
+from ziim.Ziim import Ziim
 
 try:
     # Your code here

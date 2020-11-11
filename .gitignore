@@ -5,3 +5,6 @@ ressources_check
 .history
 *cli*.txt
 .idea
+dist
+build
+MANIFEST
