@@ -1,11 +1,11 @@
-# Just to import Zeus
+# Just to import Ziim
 from os import system, path as ospath
 from sys import exit, path as syspath
 import sys
 # moving the path outside of the current dir
 syspath.insert(1, ospath.join(syspath[0], '..'))
-import src.Zeus as Zeus
-# Just to import Zeus
+import src.Ziim as Ziim
+# Just to import Ziim
 
 from subprocess import Popen, PIPE, STDOUT
 
@@ -28,7 +28,7 @@ try:
     print(output)
     error = remove2points(output)
     if len(error)>1:
-        Zeus.Zeus().go(error)
+        Ziim.Ziim().go(error)
 except KeyboardInterrupt:
-    print("Thank you using zeus-cli")
+    print("Thank you using ziim-cli")
     exit()

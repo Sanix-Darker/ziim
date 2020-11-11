@@ -4,3 +4,4 @@ ressources_check
 *node_modules
 .history
 *cli*.txt
+.idea

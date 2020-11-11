@@ -11,7 +11,7 @@ list_json = data
 # MAX_RESULT = 2
 # MAX_RESPONSES_PER_LINK = 3
 
-class Zeus:
+class Ziim:
 
     def __init__(self, _type = "Python"): # search_level = 0
         """
@@ -27,7 +27,7 @@ class Zeus:
 
 
     def presentation(self):
-        """[A simple function for the header of Zeus]
+        """[A simple function for the header of Ziim]
         """
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)

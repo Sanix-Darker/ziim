@@ -1,9 +1,9 @@
 <img src="./images/logo.png" width="100" align="center" />
 
-# Zeus
+# Ziim
 
 Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
-Zeus will handle everything for you, directly in the CLI after catching an error!\
+Ziim will handle everything for you, directly in the CLI after catching an error!\
 **AMAZING RIGHT ?**
 
 ## DEMO
@@ -14,9 +14,9 @@ Zeus will handle everything for you, directly in the CLI after catching an error
 
 Theese are steps :
 
-- Zeus get your error and ask you, where you want to find solution
+- Ziim get your error and ask you, where you want to find solution
 - You just need to enter number corresponding the forum you want to fetch answers
-- That's all, Zeus will provide you the available questions matching your error, give you the answers, votes,...
+- That's all, Ziim will provide you the available questions matching your error, give you the answers, votes,...
 
 YOU GET IT ?\
 
@@ -31,7 +31,7 @@ No need to:
 
 ## Handled Forums
 
-For Now, Zeus can find on:
+For Now, Ziim can find on:
 
 - *[Done]* StackOverflow
 - *[Done]* StackExchange
@@ -66,16 +66,16 @@ pip install -r requirements.txt
 In the code :
 
 ```python
-# You import first Zeus Class and instantiate it
-import Zeus as Zeus
-zeus = Zeus.Zeus() # search_level is not required and as default it's 0
+# You import first Ziim Class and instantiate it
+import Ziim as Ziim
+ziim = Ziim.Ziim() # search_level is not required and as default it's 0
 
 try:
     # Your code here
     test = 12/0 # This will throws an error
 except Exception as es:
-    # Then call zeus here
-    zeus.go(es)
+    # Then call ziim here
+    ziim.go(es)
     # That's all !
 ```
 
@@ -89,19 +89,19 @@ python example.py
 
 Just hit this sample command : 
 ```shell
-python ./cli/zeuscli.py node ./example.js
+python ./cli/ziimcli.py node ./example.js
 # or add an alias:
-alias zeuscli = "python absolute/path/to/cli/zeuscli.py"
+alias ziimcli = "python absolute/path/to/cli/ziimcli.py"
 
 # Then hit:
-zeuscli node ./example.js
+ziimcli node ./example.js
 ```
 
-The command `node ./example.js` will be executed and the error will be taken to zeus, with this method you can start any kind of process in CLI and use zeuscli to fetch solutions.
+The command `node ./example.js` will be executed and the error will be taken to ziim, with this method you can start any kind of process in CLI and use ziimcli to fetch solutions.
 
-## ZeusCLI DEMO
+## ZiimCLI DEMO
 
-<img src="./images/zeuscli.gif" />
+<img src="./images/ziimcli.gif" />
 
 ## Author
 
