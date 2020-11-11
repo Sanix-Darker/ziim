@@ -3,13 +3,28 @@ import json
 from lxml import html
 import requests
 from sys import exit
-from src.list_json import data
-from src.Bcolors import Bcolors as bcolors
 
-list_json = data
+
+
+list_json = json.loads(open("./parser.json", "r").read())
 
 # MAX_RESULT = 2
 # MAX_RESPONSES_PER_LINK = 3
+
+class Bcolors:
+    """[summary]
+    """
+    HEADER = '\033[95m' # rose
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m' # jaune
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    
+bcolors = Bcolors
+
 
 class Ziim:
 
@@ -30,10 +45,12 @@ class Ziim:
         """[A simple function for the header of Ziim]
         """
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+] |__  /___ _   _ ___  "+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+]   / // _ \ | | / __| ["+self._type+"] version."+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+]  / /|  __/ |_| \__ \\ This tool find your exception online for you."+ bcolors.ENDC)
-        print(bcolors.OKGREEN + "[+] /____\___|\__,_|___/ Made by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
+
+        print(bcolors.OKGREEN + "[+]  ______ _            "+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] |__  (_|_)_ __ ___   "+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]   / /| | | '_ ` _ \  ["+self._type+"] version."+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+]  / /_| | | | | | | | This tool find your exception online for you."+ bcolors.ENDC)
+        print(bcolors.OKGREEN + "[+] /____|_|_|_| |_| |_| Made by S@n1x-d4rk3r (github.com/sanix-darker)"+ bcolors.ENDC)
         print(bcolors.OKGREEN + "[+] ---------------------------------------------------------------------"+ bcolors.ENDC)
 
 
