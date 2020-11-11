@@ -1,2 +1,6 @@
+# to make requests and parse results
 requests
 lxml
+
+# for tests
+pytest

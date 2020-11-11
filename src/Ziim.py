@@ -1,10 +1,9 @@
 import json
-
-from lxml import html
 import requests
+from lxml import html
 from sys import exit, argv
-
 from subprocess import Popen, PIPE, STDOUT
+
 
 list_json = json.loads(open("./parser.json", "r").read())
 
@@ -49,7 +48,7 @@ class Ziim:
         print(bcs.OKGREEN + "[+] ---------------------------------------------------------------------" + bcs.ENDC)
         print(bcs.OKGREEN + "[+]  ______ _            " + bcs.ENDC)
         print(bcs.OKGREEN + "[+] |__  (_|_)_ __ ___   " + bcs.ENDC)
-        print(bcs.OKGREEN + "[+]   / /| | | '_ ` _ \  [" + self._type + "] version." + bcs.ENDC)
+        print(bcs.OKGREEN + "[+]   / /| | | '_ ` _ \\  [" + self._type + "] version." + bcs.ENDC)
         print(bcs.OKGREEN + "[+]  / /_| | | | | | | | This tool find your exception online for you." + bcs.ENDC)
         print(bcs.OKGREEN + "[+] /____|_|_|_| |_| |_| Made by S@n1x-d4rk3r (github.com/sanix-darker/ziim)" + bcs.ENDC)
         print(bcs.OKGREEN + "[+] ---------------------------------------------------------------------" + bcs.ENDC)
@@ -159,8 +158,7 @@ class Ziim:
                         print(
                             "[+] \
                             ```````````````````````````````````````````````````````````````````````````````````````")
-                        print("[+] " + respp["content"].replace("\n", "\n[+] \t"))
-                    print("[+] -\n")
+                        print("[+] " + respp["content"].replace("\n", "\n[+] \t") + "[+] -\n")
                 elif "0" in getall:
                     self.choose_from_answer(solutions, ch)
             except Exception as es:
@@ -268,7 +266,7 @@ class Ziim:
 
         # Getting the list of all response
         responses_content = []
-        for (responses_count, rep) in enumerate(tree2.xpath(JSONObj['responses'])):
+        for responses_count, rep in enumerate(tree2.xpath(JSONObj['responses'])):
             # On recuperes uniquement des elements qui ne sont pas de la reponse
             if ''.join(rep.xpath('.//text()')) != to_append["solve_response"]:
                 votes_per_response = 0
