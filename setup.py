@@ -5,12 +5,12 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ziim",
-    version="0.0.6",
+    version="0.0.9.1",
     scripts=['./scripts/ziim.sh'],
     author="Sanix-darker",
     author_email="s4nixd@gmail.com",
-    description="Let your CLI find available solutions for errors / exceptions online on commands you hit, for you, "
-                "no need open a Browser. and find something yourself",
+    description="Let your CLI find available solutions for errors/exceptions in your code for you, "
+                "no need open a Browser. and do something yourself, you just have to select the forum",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/sanix-darker/ziim",

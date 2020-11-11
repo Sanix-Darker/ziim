@@ -52,23 +52,23 @@ Let's see some examples on how to use it :
 
 Make sure you have installed all requirements in ./python/requirements.txt, by running :
 ```shell
-pip install -r requirements.txt
+pip3 install ziim
 ```
 
 In the code :
 
 ```python
 # You import first Ziim Class and instantiate it
-import Ziim as Ziim
-ziim = Ziim.Ziim() # search_level is not required and as default it's 0
+import ziim
+# search_level is not required and as default it's 0
+ziim = ziim.Ziim().go 
 
 try:
     # Your code here
     test = 12/0 # This will throws an error
 except Exception as es:
     # Then call ziim here
-    ziim.go(es)
-    # That's all !
+    ziim(es)
 ```
 
 Run in the cli :
