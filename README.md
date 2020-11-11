@@ -1,14 +1,8 @@
-<img src="./images/logo.png" width="100" align="center" />
-
 # Ziim
 
 Never open a Browser-tab again, copy/Paste your error/Exception to find available solutions online randomly!\
 Ziim will handle everything for you, directly in the CLI after catching an error!\
 **AMAZING RIGHT ?**
-
-## DEMO
-
-<img src="./images/demo.gif" />
 
 ## How it's works
 
@@ -40,10 +34,8 @@ For Now, Ziim can find on:
 - *[Done]* SitePoint
 - *[Done]* Quora
 - *[Done]* Reddit
-- *[Not yet]* Hackr
-- *[Not yet]* Webdeveloper
 
-You will have the available list in `./src/list_json.py`
+You will have the available list in `./parser.json`
 
 ## Requirements
 
@@ -81,27 +73,18 @@ except Exception as es:
 
 Run in the cli :
 ```shell
-cd ./test
-python example.py
+python3 -m src.example
 ```
 
 ## As a CLI
 
 Just hit this sample command : 
 ```shell
-python ./cli/ziimcli.py node ./example.js
-# or add an alias:
-alias ziimcli = "python absolute/path/to/cli/ziimcli.py"
-
 # Then hit:
-ziimcli node ./example.js
+zm node ./example.js
 ```
 
 The command `node ./example.js` will be executed and the error will be taken to ziim, with this method you can start any kind of process in CLI and use ziimcli to fetch solutions.
-
-## ZiimCLI DEMO
-
-<img src="./images/ziimcli.gif" />
 
 ## Author
 

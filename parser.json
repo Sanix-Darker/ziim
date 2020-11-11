@@ -78,37 +78,5 @@
         "responses":"//div[contains(@class, 'postText')]",
         "responses_vote":"//div[@class='nothing-yet']/text()",
         "solve_response":"//div[@class='nothing-yet']"
-    },
-    {
-        "title":"Quora [AJAX] not handle",
-        "link":"https://www.quora.com",
-        "search_link":"https://www.quora.com/search?q=[z]",
-        "space_replacement": "+",
-        "each":{
-            "title": "//div[@class='QueryResults']//span[@class='ui_qtext_rendered_qtext']/text()",
-            "link": "//div[@class='QueryResults']//a[@class='question_link']/@href",
-            "content": "//div[@class='QueryResults']//div[contains(@class, 'truncated_q_text')]//text()",
-            "answers": "//div[@class='nothing-yet']/text()",
-            "votes": "//div[@class='nothing-yet']/text()"
-        },
-        "responses":"//div[contains(@class, 'postText')]",
-        "responses_vote":"//div[@class='nothing-yet']/text()",
-        "solve_response":"//div[@class='nothing-yet']"
-    },
-    {
-        "title":"SitePoint [AJAX] not handle",
-        "link":"https://www.sitepoint.com",
-        "search_link":"https://www.sitepoint.com/community/search?q=[z]",
-        "space_replacement": "%20",
-        "each":{
-            "title": "//span[contains(@class, 'topic-title')]//span[@class='ember-view']/text()",
-            "link": "//a[contains(@class, 'search-link')]/@href",
-            "content": "//div[contains(@class, 'blurb')]//text()",
-            "answers": "//div[@class='nothing-yet']/text()",
-            "votes": "//div[@class='nothing-yet']/text()"
-        },
-        "responses":"//div[@class='text']",
-        "responses_vote":"//div[@class='nothing-yet']/text()",
-        "solve_response":"//div[@itemprop='acceptedAnswer']"
     }
 ]
