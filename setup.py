@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ziim",
-    version="0.0.9.2",
+    version="0.0.1",
     scripts=['./scripts/ziim'],
     author="Sanix-darker",
     author_email="s4nixd@gmail.com",
