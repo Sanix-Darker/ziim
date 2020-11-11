@@ -220,9 +220,9 @@ class Ziim:
         except Exception as es:
             print(es)
 
-    # This method will generate a map of responses per links
     def buildResultList(self, elt, link, tree, JSONObj, i):
         """
+        This method will generate a map of responses per links
         This method have the role on building the result_list
 
         Arguments:
@@ -282,19 +282,22 @@ class Ziim:
         to_append["responses"] = responses_content
         return to_append
 
-    # This method will only print the waiting message
     def checking_message_method(self):
+        """
+        This method will only print the waiting message
+        """
         self.checking_message += "."
         return self.checking_message
 
-    # This method have the only role on printing point to wait
     def wainting(self):
+        """
+        This method have the only role on printing point to wait
+        """
         print(self.checking_message_method(), end="")
 
-    # Remove spcial character form the error text search
     def replaceSPECIALCARACTER(self, __string):
         """
-        replace SPECIAL CARACTER
+        Remove spcial character form the error text search
 
         Arguments:
             __string
@@ -307,8 +310,8 @@ class Ziim:
             and the solution
 
         Arguments:
-            search_link {[type]} -- [description]
-            JSONObj {[type]} -- [description]
+            search_link
+            JSONObj
 
         Returns:
             [type] -- [description]
@@ -340,10 +343,10 @@ class Ziim:
         else:
             return False, [], [], 0
 
-    # ? go method
-    # ! The Main method that take the eror and proceed
     def go(self, error):
         """
+        # ? go method
+        # ! The Main method that take the eror and proceed
         A function that return the result of solutions around the web
 
         Keyword Arguments:
